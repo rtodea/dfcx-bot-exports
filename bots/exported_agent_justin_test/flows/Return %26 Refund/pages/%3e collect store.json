@@ -1,0 +1,233 @@
+{
+  "name": "1b423adf-d0cf-49af-8254-b2e461bba54a",
+  "displayName": "\u003e collect store",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.store_number",
+      "required": true,
+      "entityType": "@sys.number",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we are waiting for your input. Please say or enter the address number that you want to select, or else say next to show more store addresses." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "c8a15f28-641f-47f1-b47c-33a82fff53a4"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we are still waiting for your input. Please say or enter the address number that you want to select, or else say next to show more store addresses." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "fc25d847-7200-4f9a-b276-7bf0f97e0fd9"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "1c272e93-8874-42d8-95b1-b00b588d1ed7"
+        }, {
+          "event": "sys.no-match-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we didn’t get that. Please say or enter the address number that you want to select, or else say next to show more store addresses." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "c6037af8-04bd-47d0-914d-a28a9bcdc799"
+        }, {
+          "event": "sys.no-match-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we're still not getting that. Please say or enter the address number that you want to select, or else say next to show more store addresses." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "00fe8c75-ebe8-4b79-b4f4-0b20eed4a40b"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-match-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_match"
+            } ]
+          },
+          "name": "e3feba58-cc43-45e2-89e3-d6ef22601a29"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Please say or enter the address number that you want to select, or say \"next\" to show more store addresses." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_show_more_stores",
+    "condition": "$flow.store_counter \u003c $sys.func.COUNT($flow.store_id) AND $flow.store_counter \u003c $flow.max_store_display",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.store_display_counter",
+        "value": 0
+      } ]
+    },
+    "targetPage": "multiple store message",
+    "name": "9ec5c44e-35fc-4b59-a730-6fe85cc0ac86"
+  }, {
+    "intent": "prebuilt_components_show_more_stores",
+    "condition": "$flow.store_counter = $sys.func.COUNT($flow.store_id) AND $flow.all_store_displayed_counter = 0",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.store_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.all_store_displayed_counter",
+        "value": "$sys.func.ADD($flow.all_store_displayed_counter, 1)"
+      }, {
+        "parameter": "$flow.store_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.store_number",
+        "value": null
+      } ]
+    },
+    "targetPage": "multiple store message",
+    "name": "6b0cf2be-5ff0-486c-b428-41f9fdb58680"
+  }, {
+    "intent": "prebuilt_components_show_more_stores",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We apologize for the inconvenience, but we are unable to locate any further address associated with the zip code." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.store_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.store_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.store_number",
+        "value": null
+      }, {
+        "parameter": "$flow.all_store_displayed_counter",
+        "value": 0
+      } ]
+    },
+    "targetPage": "\u003e confirm different zip code",
+    "name": "f53fac35-0659-45f2-b92b-b209a458fcab"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "2c29493a-b436-481d-8640-fb2041248383"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "495d7cf3-1b50-4d9e-95d2-78aee4da5c1b"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Here is the list of locations near the zip code you entered. $flow.multi_store_message. Please say or enter the address number that you want to select or else say next to show more store addresses."
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "b8427365-1667-4bb0-b532-c2d3da2b6efd"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $sys.func.ROUND($flow.store_number) = $flow.store_number AND $flow.store_number \u003c= $sys.func.COUNT($flow.store_id) AND $flow.store_number \u003e 0",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.store_index_number",
+        "value": "$sys.func.MINUS($flow.store_number,1)"
+      } ]
+    },
+    "targetPage": "\u003e confirm selected store",
+    "name": "e5507dab-7a76-4ccc-8841-2f8be1c3b195"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.retry_store_number_counter \u003c $flow.max_retry_store_number_counter",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn't get what you said. Please say the number of the address you'd like to select, like \"one\" or \"two\"." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.store_number",
+        "value": null
+      }, {
+        "parameter": "$flow.store_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.store_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.retry_store_number_counter",
+        "value": "$sys.func.ADD($flow.retry_store_number_counter,1)"
+      } ]
+    },
+    "targetPage": "multiple store message",
+    "name": "2ff8626f-5204-4648-9730-d53cd15d130a"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.retry_store_number_counter = $flow.max_retry_store_number_counter",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, you have reached the maximum limit for selecting the address number. Please visit our website to initiate return \u0026 refund process." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "4cccc419-b994-4507-9754-5c7d831dc75b"
+  } ]
+}

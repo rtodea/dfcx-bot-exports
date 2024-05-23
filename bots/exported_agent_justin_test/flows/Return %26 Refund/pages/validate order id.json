@@ -1,0 +1,78 @@
+{
+  "name": "229d2fc7-260d-4ca7-bb63-e00b135dabd2",
+  "displayName": "validate order id",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "setParameterActions": [ {
+      "parameter": "$flow.order_id",
+      "value": "$session.params.all_recent_order_id[$sys.func.TO_NUMBER($flow.order_counter)]"
+    }, {
+      "parameter": "$flow.last_five_digit_of_order_id",
+      "value": "$sys.func.MID($flow.order_id,$sys.func.MINUS($sys.func.LEN($flow.order_id),4),5)"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.last_five_digit_of_order_id = $flow.user_provided_last_five_digit_of_order_id AND $flow.order_counter \u003c $sys.func.COUNT($session.params.all_recent_order_id)",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.duplicate_order_id",
+        "value": "$sys.func.APPEND($flow.duplicate_order_id,$flow.order_id)"
+      }, {
+        "parameter": "$flow.order_counter",
+        "value": "$sys.func.ADD($flow.order_counter, 1)"
+      } ]
+    },
+    "targetPage": "Current Page",
+    "name": "27783e7b-9ad0-49b1-a643-7ad2f8e9f902"
+  }, {
+    "condition": "$flow.last_five_digit_of_order_id != $flow.user_provided_last_five_digit_of_order_id AND $flow.order_counter \u003c $sys.func.COUNT($session.params.all_recent_order_id)",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.order_counter",
+        "value": "$sys.func.ADD($flow.order_counter, 1)"
+      } ]
+    },
+    "targetPage": "Current Page",
+    "name": "0f71ef1c-fb54-47f8-8984-de660b62e076"
+  }, {
+    "condition": "$sys.func.COUNT($flow.duplicate_order_id) \u003e 0",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "check duplicate order ID",
+    "name": "1e6ed551-0e12-4635-864b-dcd2625f63a4"
+  }, {
+    "condition": "$flow.retry_another_order_counter \u003c= $flow.max_retry_another_order",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn't find any order on the records." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.order_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.duplicate_order_id",
+        "value": [ ]
+      } ]
+    },
+    "targetPage": "\u003e confirm return another order",
+    "name": "d7ed2248-e0b9-4941-a072-f9ed84f27691"
+  }, {
+    "condition": "$flow.retry_another_order_counter \u003e $flow.max_retry_another_order",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn't find any order on the records." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "0e625a02-c50d-42a1-be10-8b63e26573a0"
+  } ]
+}

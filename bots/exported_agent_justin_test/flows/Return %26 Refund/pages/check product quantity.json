@@ -1,0 +1,37 @@
+{
+  "name": "e6835c3f-4cd0-43e8-8ab3-807ce57762ef",
+  "displayName": "check product quantity",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "setParameterActions": [ {
+      "parameter": "$flow.selected_product_quantity",
+      "value": "$flow.order_returnable_product_quantity[$sys.func.TO_NUMBER($flow.product_index_number)]"
+    }, {
+      "parameter": "$flow.selected_order_product_id",
+      "value": "$flow.order_returnable_product_id[$sys.func.TO_NUMBER($flow.product_index_number)]"
+    }, {
+      "parameter": "$flow.return_product_id_list",
+      "value": "$sys.func.APPEND($flow.return_product_id_list,$flow.selected_order_product_id)"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.selected_product_quantity \u003e 1",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e collect product return quantity",
+    "name": "d3341cb6-95e7-4ead-898f-efa762cad013"
+  }, {
+    "condition": "$flow.selected_product_quantity = 1",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.return_product_quantity_list",
+        "value": "$sys.func.APPEND($flow.return_product_quantity_list,$flow.selected_product_quantity)"
+      } ]
+    },
+    "targetPage": "\u003e collect return reason",
+    "name": "a7189287-26d4-4a5d-a5ee-0d4e7522cf6d"
+  } ]
+}

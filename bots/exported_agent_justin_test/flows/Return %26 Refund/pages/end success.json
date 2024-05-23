@@ -1,0 +1,30 @@
+{
+  "name": "699c2c25-96c3-416b-b9bc-c280c1d1a2c3",
+  "displayName": "end success",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Thank you for calling." ]
+      },
+      "languageCode": "en"
+    } ],
+    "generators": [ {
+      "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/87b4e770-dfef-4fc8-931a-20dd75347636",
+      "outputParameter": "$request.generative.summarization"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "true",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "conversation_summary",
+        "value": "$request.generative.summarization"
+      } ]
+    },
+    "targetPage": "End Flow",
+    "name": "3b5130cb-cfa9-48c5-99de-eff8d4d1bcbd"
+  } ]
+}

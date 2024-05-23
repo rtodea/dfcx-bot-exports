@@ -1,0 +1,17 @@
+{
+  "name": "53fa8fcd-7480-44d1-8b7d-4ea78b8d7b42",
+  "displayName": "prebuilt_components_return_refund:post_return_details",
+  "genericWebService": {
+    "uri": "https://www.example.com",
+    "webhookType": "FLEXIBLE",
+    "httpMethod": "POST",
+    "requestBody": "{\n  \"phone_number\": \"$session.params.phone_number\",\n  \"order_id\": \"$flow.order_id\",\n  \"return_product_list\": \"$flow.return_product_id_list\",\n  \"return_product_quantity_list\": \"$flow.return_product_quantity_list\",\n  \"return_reason_list\": \"$flow.return_reason_list\",\n  \"order_refund_mode\": \"$flow.order_refund_mode\",\n  \"order_return_location\": \"$flow.order_return_location\",\n  \"order_return_store_id\": \"$flow.order_return_store_id\",\n  \"fulfillmentInfo\": {\n    \"tag\": \"sendReturnDetails\"\n  }\n}",
+    "parameterMapping": [ {
+      "key": "$flow.order_return_ticket_id",
+      "value": "order_return_ticket_id"
+    } ]
+  },
+  "timeout": {
+    "seconds": 5
+  }
+}

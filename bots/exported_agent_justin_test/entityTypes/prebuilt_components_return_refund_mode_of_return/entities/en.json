@@ -1,0 +1,15 @@
+{
+  "entities": [ {
+    "value": "return_to_store",
+    "synonyms": [ "give back to store", "hand over merchandise to store", "refund item at store", "return at store", "return item to merchant", "return purchase to store", "submit return to store", "Take back to store" ],
+    "languageCode": "en"
+  }, {
+    "value": "drop_off_at_location",
+    "synonyms": [ "DHL", "drop", "drop at location", "drop off at location", "FedEx", "Freightquote", "LaserShip", "OnTrac", "ShipStation", "Spee-Dee Delivery", "UPS", "USPS", "drop off location" ],
+    "languageCode": "en"
+  }, {
+    "value": "scheduled_for_pickup",
+    "synonyms": [ "appointment for pickup", "book for pickup", "pickup", "schedule for pickup", "schedule pickup", "scheduled for collection", "scheduled for retrieval", "scheduled to be picked up", "set for pickup" ],
+    "languageCode": "en"
+  } ]
+}

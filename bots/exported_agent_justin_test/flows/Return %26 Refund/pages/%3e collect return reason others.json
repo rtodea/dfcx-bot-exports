@@ -1,0 +1,65 @@
+{
+  "name": "6275955d-c928-4f94-b8a9-21f72aa5d8e5",
+  "displayName": "\u003e collect return reason others",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.order_product_return_reason_other",
+      "required": true,
+      "entityType": "@sys.any",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we are waiting for your input. Please state the reason for your return." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "5bcdf8cd-dbbf-40cc-81e7-acff8459721e"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we are still waiting for your input. Please state the reason for your return." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "20d952ab-e681-4b63-86a2-9c3b54701f3c"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "92853a57-b49e-4853-88ec-36bf706fa799"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Please state the reason for your return." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "$page.params.status = \"FINAL\"",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e confirm return reason others",
+    "name": "794f4f15-97f8-47b8-b162-71d93f54f90d"
+  } ]
+}

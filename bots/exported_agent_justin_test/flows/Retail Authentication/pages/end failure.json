@@ -1,0 +1,18 @@
+{
+  "name": "fa25dfe2-8ee4-443f-9850-1fcddf498f12",
+  "displayName": "end failure",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "true",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "END_FLOW_WITH_FAILURE",
+    "name": "f9327c98-73ab-4f05-85e9-f783425b8cdb"
+  } ]
+}

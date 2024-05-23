@@ -1,0 +1,164 @@
+{
+  "name": "3b7765de-3749-4ab9-a927-ca64591e65ab",
+  "displayName": "\u003e confirm selected store",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "To confirm, you have selected $flow.store_address[$sys.func.TO_NUMBER($flow.store_index_number)]. Is that correct?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Perfect. We have sent a shipping label and ticket number to your registered phone number and email. Please print it out and attach it to your package and drop your return off within 30 days." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.order_return_store_id",
+        "value": "$flow.store_id[$sys.func.TO_NUMBER($flow.store_index_number)]"
+      } ]
+    },
+    "targetPage": "\u003e send order return details API",
+    "name": "432120b8-42b7-40e7-b01a-4a31f2703311"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "condition": "$flow.retry_store_selection \u003c $flow.max_retry_store_selection",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.retry_store_selection",
+        "value": "$sys.func.ADD($flow.retry_store_selection, 1)"
+      }, {
+        "parameter": "$flow.store_number",
+        "value": null
+      }, {
+        "parameter": "$flow.store_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.store_display_counter",
+        "value": 0
+      } ]
+    },
+    "targetPage": "\u003e collect zip code",
+    "name": "2ecf7c31-069b-499f-9971-094441b3df5a"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "fbf3a2ba-af98-4193-8826-dfdc3e12d752"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "a1df59d3-ec75-421a-83f1-110f20567ef5"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "e90a202e-b171-4dac-a9d7-8e16b7341973"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Just to confirm you have selected for $flow.store_address[$sys.func.TO_NUMBER($flow.store_index_number)]. Is that correct?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "0717fe34-4e90-44c6-af9d-d2bb231b20a7"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Just to confirm you have selected for $flow.store_address[$sys.func.TO_NUMBER($flow.store_index_number)]. Is that correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "549ce4c2-652f-41af-8677-c941db43195b"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Just to confirm you have selected for $flow.store_address[$sys.func.TO_NUMBER($flow.store_index_number)]. Is that correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "e8ea6c23-7954-4ab3-bf16-20d9c2fed4a0"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "a91a34eb-8816-46da-810b-ccd2930cebb4"
+  }, {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Just to confirm you have selected for $flow.store_address[$sys.func.TO_NUMBER($flow.store_index_number)]. Is that correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "7ff0710c-b0ed-4cba-9214-d7cb7e99806d"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Just to confirm you have selected for $flow.store_address[$sys.func.TO_NUMBER($flow.store_index_number)]. Is that correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "86ccf5f0-b467-4d67-a03f-cec944619105"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "ee347c75-5242-42b1-a91d-218011e50e3e"
+  } ]
+}

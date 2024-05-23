@@ -1,0 +1,28 @@
+{
+  "name": "9276c51f-acc7-4223-bd4e-6ae98783c5eb",
+  "displayName": "check order product count",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.order_returnable_product_count = 1",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.product_index_number",
+        "value": 0
+      } ]
+    },
+    "targetPage": "\u003e confirm return",
+    "name": "0ae80b31-9a89-4766-9cdf-49bd67007da9"
+  }, {
+    "condition": "$flow.order_returnable_product_count \u003e 1",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "multiple product message",
+    "name": "93777367-78e6-4f6a-80c1-5dac85395978"
+  } ]
+}

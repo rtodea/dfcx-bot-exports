@@ -1,0 +1,10 @@
+{
+  "name": "cd528c3c-6c27-439f-8a52-a93cf1daece9",
+  "displayName": "prebuilt_components_dob_collection_collect_month",
+  "parameters": [ {
+    "id": "month",
+    "entityType": "@prebuilt_components_dob_collection_dob_month"
+  } ],
+  "priority": 500000,
+  "numTrainingPhrases": 20
+}

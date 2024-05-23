@@ -1,0 +1,62 @@
+{
+  "name": "3093ebec-88e2-4c5c-8a92-298b97a5f2af",
+  "displayName": "retry OTP",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.retry_otp_counter = $flow.max_retry_otp",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, you exceeded the maximum number of attempts for validating the code." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "3b2dae9c-5530-4b6e-8a19-1c4faf085ac3"
+  }, {
+    "condition": "$flow.retry_otp_counter \u003c $flow.max_retry_otp",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, you have entered an invalid code. Please try again." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.retry_otp_counter",
+        "value": "$sys.func.ADD($flow.retry_otp_counter, 1)"
+      } ],
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.channel = phone",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "\u003cspeak\u003eWe have sent a code to your registered phone number ending with \u003csay-as interpret-as=\"telephone\"\u003e $session.params.last_4_digits\u003c/say-as\u003e. This may take a few seconds. Can you please confirm the code?\u003c/speak\u003e" ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "condition": "$flow.channel = email",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "We have sent a code to your registered email address. This may take a few seconds. Can you please confirm the code?" ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "targetPage": "\u003e collect OTP code",
+    "name": "521e8885-8555-4973-9eb6-c23a86c397e6"
+  } ]
+}

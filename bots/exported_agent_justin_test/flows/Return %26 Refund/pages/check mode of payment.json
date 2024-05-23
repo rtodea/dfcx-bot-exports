@@ -1,0 +1,34 @@
+{
+  "name": "590ad9d0-86b9-41d6-9050-6289ff24f25a",
+  "displayName": "check mode of payment",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.order_payment_mode = $flow.order_payment_mode_store_credit",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Please note: For purchases made using your wallet, refunds are solely credited to the wallet or store credit account." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.order_refund_mode",
+        "value": "store_credit"
+      } ]
+    },
+    "targetPage": "\u003e collect return location",
+    "name": "51448c85-afdf-4f42-b9c7-27f2f6f597e4"
+  }, {
+    "condition": "true",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e collect mode of refund",
+    "name": "cdb1819a-1b82-4d5a-9bc8-938e52e2d332"
+  } ]
+}

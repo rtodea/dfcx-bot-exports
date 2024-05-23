@@ -1,0 +1,49 @@
+{
+  "name": "64d5ac26-4c0b-4c31-866f-f9933bcec956",
+  "displayName": "validate order id",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$sys.func.LEN($session.params.user_provided_last_five_digit_of_order_id) = $flow.max_order_id_length",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "\u003cspeak\u003eThe last five digits of the order ID that we got are \u003csay-as interpret-as=\"verbatim\"\u003e$session.params.user_provided_last_five_digit_of_order_id\u003c/say-as\u003e, is that correct?\u003c/speak\u003e" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "\u003e confirm order id",
+    "name": "07ac9172-ccb0-4900-bbc6-fb9df3a7a626"
+  }, {
+    "condition": "$sys.func.LEN($session.params.user_provided_last_five_digit_of_order_id) != $flow.max_order_id_length AND $flow.invalid_5digit_code_counter \u003c $flow.max_retry_counter",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.invalid_5digit_code_counter",
+        "value": "$sys.func.ADD($flow.invalid_5digit_code_counter,1)"
+      }, {
+        "parameter": "last_five_digit_order_id",
+        "value": null
+      } ]
+    },
+    "targetPage": "\u003e collect last 5 digit of order id",
+    "name": "57cf4c6d-dea2-4201-bf6e-3e9f171c18f8"
+  }, {
+    "condition": "$flow.invalid_5digit_code_counter = $flow.max_retry_counter",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "91d59eaa-9c82-496a-8fe1-db3e31f8ead8"
+  } ]
+}

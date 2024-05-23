@@ -1,0 +1,140 @@
+{
+  "name": "721104a1-a945-4053-91fc-3e11752f9d16",
+  "displayName": "\u003e confirm product return list",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Shall we move forward with the order you have chosen?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e collect mode of refund",
+    "name": "b381bfdf-17d3-4910-9d55-dff92b52ddee"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We request you to visit our website to initiate the return and refund process." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "496bc7af-fca4-4423-87c5-c0c32e12256d"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "90820227-1438-4904-a255-1266a0774f38"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "a0506250-f1a7-4e62-a55d-8ffc065cefb0"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Shall we move forward with the order you have chosen?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "5f7762b3-5251-45c6-9972-ea72a98c2caf"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Shall we move forward with the order you have chosen?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "cd1ee923-36f6-406a-9d42-bb9acdc5b4f4"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Shall we move forward with the order you have chosen?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "f1bfbb1b-0b83-4e95-8495-99d990bbacc7"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "5df43442-60c3-471f-bb84-b2e554ca6a33"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Shall we move forward with the order you have chosen?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "dbc65185-e63c-474c-8ecc-e1d74afad1bb"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Shall we move forward with the order you have chosen?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "a4a38b8e-c39a-4b0d-8d00-d014be889be0"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "7f27e215-1165-4134-9aaf-5a96634a8feb"
+  } ]
+}

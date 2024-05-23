@@ -1,0 +1,23 @@
+{
+  "name": "8f5fecd9-6133-46b4-9f08-aa8e12e772e0",
+  "displayName": "prebuilt_components_retail_authentication:verify_user_details",
+  "genericWebService": {
+    "uri": "https://www.example.com",
+    "webhookType": "FLEXIBLE",
+    "httpMethod": "POST",
+    "requestBody": "{\n  \"phone_number\": \"$session.params.phone_number\",\n  \"fulfillmentInfo\": {\n    \"tag\": \"verifyUser\"\n  }\n}",
+    "parameterMapping": [ {
+      "key": "all_recent_order_id",
+      "value": "all_order_id"
+    }, {
+      "key": "email",
+      "value": "user_email"
+    }, {
+      "key": "user_first_name",
+      "value": "user_first_name"
+    } ]
+  },
+  "timeout": {
+    "seconds": 5
+  }
+}

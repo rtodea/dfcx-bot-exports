@@ -1,0 +1,184 @@
+{
+  "name": "7423cf82-21ea-470e-88e2-af4051c97a50",
+  "displayName": "\u003e confirm return another item",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Would you like to return another product?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "condition": "$sys.func.COUNT($flow.return_product_id_list) \u003e= 3",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, you have reached the maximum limit for adding the product to the return list." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "\u003e confirm product return list",
+    "name": "0c67bf62-40d5-4520-b0d5-5eb315778c2d"
+  }, {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.product_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.product_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.product_number",
+        "value": null
+      }, {
+        "parameter": "$flow.order_product_return_reason",
+        "value": null
+      }, {
+        "parameter": "$flow.order_product_quantity_return_count",
+        "value": null
+      }, {
+        "parameter": "$flow.order_product_return_reason_other",
+        "value": null
+      }, {
+        "parameter": "$flow.retry_another_order_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.retry_select_quantity",
+        "value": 0
+      }, {
+        "parameter": "$flow.retry_order_number_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.retry_return_reason_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.product_return_confirm_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.retry_select_order_number_counter",
+        "value": 0
+      } ]
+    },
+    "targetPage": "multiple product message",
+    "name": "42044a4d-8827-46b2-aacb-0b9aded9e4c8"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "check mode of payment",
+    "name": "4605eb1e-e6be-4294-a552-9aa5577b51d6"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "1b97b789-3db3-4f7a-991a-bf964b203ff1"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "43235653-38f3-4c92-9749-accb74b1aa56"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Would you like to return another product?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "9035cbe0-893d-494f-a8b9-2251a83c539f"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Would you like to return another product?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "20306eef-e517-43e7-ac7d-9ca4d94404c8"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Would you like to return another product?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "bf162140-5a23-4896-96fc-3cb5b33ed231"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "ed7e778b-dc6f-4514-a58c-9c95729f64ab"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Would you like to return another product?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "fa5aec22-6791-4b3c-9dec-4d13cc547249"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Would you like to return another product?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "94a95c96-d9d4-4e71-b835-2cf5f40ebf5f"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "2dff108d-4010-4f24-8606-8dfee26d8205"
+  } ]
+}

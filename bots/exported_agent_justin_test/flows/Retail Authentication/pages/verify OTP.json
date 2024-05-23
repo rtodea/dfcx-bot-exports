@@ -1,0 +1,31 @@
+{
+  "name": "c7c9f77f-bae1-416e-ac51-3efd1a581d35",
+  "displayName": "verify OTP",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.collect_otp = $flow.generated_otp",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "auth_level",
+        "value": 1
+      } ]
+    },
+    "targetPage": "end success",
+    "name": "f828a345-664e-4556-8267-b6d6a867e20b"
+  }, {
+    "condition": "$flow.collect_otp != $flow.generated_otp",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.collect_otp",
+        "value": null
+      } ]
+    },
+    "targetPage": "retry OTP",
+    "name": "fc0faa14-730a-4cab-bc3f-0bf5928a31be"
+  } ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "8533a06d-9045-4453-9133-e053190ae2e6",
+  "displayName": "\u003e collect zip code",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Let's find a store near you." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "$session.params.zip_code_collection_zip_code = null",
+    "triggerFulfillment": {
+    
+    },
+    "targetFlow": "Zip Code Collection",
+    "name": "310eebd0-9c01-4c18-a0f3-b1e8ca27c1f2"
+  }, {
+    "condition": "$session.params.zip_code_collection_zip_code != null",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.zip_code",
+        "value": "$session.params.zip_code_collection_zip_code"
+      }, {
+        "parameter": "zip_code_collection_zip_code",
+        "value": null
+      } ]
+    },
+    "targetPage": "\u003e fetch store details API",
+    "name": "d6627071-d968-4d0b-8d1c-859e94077981"
+  } ],
+  "eventHandlers": [ {
+    "targetPage": "end failure",
+    "event": "flow.failed",
+    "triggerFulfillment": {
+    
+    },
+    "name": "11a450bd-7f93-447f-8635-a24d9f51bacb"
+  }, {
+    "targetPage": "end escalation",
+    "event": "flow.failed.human-escalation",
+    "triggerFulfillment": {
+    
+    },
+    "name": "79c32fed-c0cc-4211-8703-b610460b5917"
+  } ]
+}

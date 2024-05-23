@@ -1,0 +1,21 @@
+{
+  "name": "2fc641fd-cdc3-45fe-be89-a54312bf04af",
+  "displayName": "end escalation",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "true",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "origin",
+        "value": null
+      } ]
+    },
+    "targetPage": "END_FLOW_WITH_HUMAN_ESCALATION",
+    "name": "4fea2d04-e5b9-4d92-93ed-56d24d2e77bb"
+  } ]
+}

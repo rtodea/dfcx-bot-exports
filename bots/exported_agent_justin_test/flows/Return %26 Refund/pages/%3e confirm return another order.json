@@ -1,0 +1,153 @@
+{
+  "name": "2f51d12a-d460-4c1c-b58a-c179fab4d969",
+  "displayName": "\u003e confirm return another order",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Would you like to return another order?" ]
+      },
+      "languageCode": "en"
+    } ],
+    "setParameterActions": [ {
+      "parameter": "$flow.retry_another_order_counter",
+      "value": "$sys.func.ADD($flow.retry_another_order_counter,1)"
+    }, {
+      "parameter": "last_five_digit_of_order_id",
+      "value": null
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.check_recent_order_details",
+        "value": "false"
+      }, {
+        "parameter": "$flow.order_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.duplicate_order_id",
+        "value": [ ]
+      } ]
+    },
+    "targetPage": "\u003e collect another order id",
+    "name": "799ab814-6fb1-4254-83fc-415cded0fff7"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end success",
+    "name": "97d9875b-b628-43ea-b83b-52b26c023109"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "26d01801-6dfe-43e8-a0fc-988bf5392268"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "091508ff-27e0-4e7c-96bc-c675f8f0cf97"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Would you like to return another order?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "fc2727ec-4d1d-42a0-902d-b0c9680a35b2"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Would you like to return another order?" ]
+        },
+        "languageCode": "en"
+      } ],
+      "enableGenerativeFallback": true
+    },
+    "name": "6e3264ca-0620-4207-ba57-ba634f75a390"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Would you like to return another order?" ]
+        },
+        "languageCode": "en"
+      } ],
+      "enableGenerativeFallback": true
+    },
+    "name": "af963777-c249-4c4b-8b4a-fddfa54f272d"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "df10c1e7-a3c3-4a5a-90c2-1f755fb0df83"
+  }, {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Would you like to return another order?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "853c32d6-fe62-47ab-b271-4f6d4053f200"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Would you like to return another order?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "c3ad4c5d-d7cf-457b-8dba-cc900ea1564d"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "fa76d124-55c2-4b1a-9d19-d1b36604a0ce"
+  } ]
+}

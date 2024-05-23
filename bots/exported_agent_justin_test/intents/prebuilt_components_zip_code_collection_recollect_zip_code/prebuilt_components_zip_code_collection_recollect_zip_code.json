@@ -1,0 +1,11 @@
+{
+  "name": "8f879d59-bfe1-41d1-a1b3-0a7358e0a303",
+  "displayName": "prebuilt_components_zip_code_collection_recollect_zip_code",
+  "parameters": [ {
+    "id": "zip_code",
+    "entityType": "@sys.number-sequence",
+    "isList": true
+  } ],
+  "priority": 500000,
+  "numTrainingPhrases": 21
+}

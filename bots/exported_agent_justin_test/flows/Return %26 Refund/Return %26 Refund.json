@@ -1,0 +1,181 @@
+{
+  "name": "4dc78494-a758-452b-b836-caa2f1589147",
+  "displayName": "Return \u0026 Refund",
+  "transitionRoutes": [ {
+    "condition": "true",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.order_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.product_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.product_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_product_display_counter",
+        "value": 2
+      }, {
+        "parameter": "$flow.retry_another_order_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_another_order",
+        "value": 2
+      }, {
+        "parameter": "$flow.store_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.store_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_store_display_counter",
+        "value": 1
+      }, {
+        "parameter": "$flow.retry_store_selection",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_store_selection",
+        "value": 2
+      }, {
+        "parameter": "$flow.retry_another_account_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_another_account_counter",
+        "value": 2
+      }, {
+        "parameter": "$flow.all_products_displayed_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.retry_product_number_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_product_number_counter",
+        "value": 2
+      }, {
+        "parameter": "$flow.max_product_display",
+        "value": 9
+      }, {
+        "parameter": "$flow.max_store_display",
+        "value": 10
+      }, {
+        "parameter": "$flow.retry_select_quantity",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_select_quantity",
+        "value": 2
+      }, {
+        "parameter": "$flow.return_product_id_list",
+        "value": [ ]
+      }, {
+        "parameter": "$flow.retry_another_zip_code_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_another_zip_code",
+        "value": 2
+      }, {
+        "parameter": "$flow.retry_order_number_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_order_number",
+        "value": 2
+      }, {
+        "parameter": "$flow.duplicate_order_id",
+        "value": [ ]
+      }, {
+        "parameter": "$flow.return_product_quantity_list",
+        "value": [ ]
+      }, {
+        "parameter": "$flow.return_reason_list",
+        "value": [ ]
+      }, {
+        "parameter": "$flow.all_store_displayed_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.order_payment_mode_COD",
+        "value": "COD"
+      }, {
+        "parameter": "$flow.retry_store_number_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_store_number_counter",
+        "value": 2
+      }, {
+        "parameter": "$flow.retry_return_reason_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_return_reason_counter",
+        "value": 2
+      }, {
+        "parameter": "$flow.order_payment_mode_store_credit",
+        "value": "store_credit"
+      }, {
+        "parameter": "$flow.order_refund_mode_source_account",
+        "value": "source_account"
+      }, {
+        "parameter": "$flow.order_return_location_scheduled_for_pickup",
+        "value": "scheduled_for_pickup"
+      }, {
+        "parameter": "$flow.products_message",
+        "value": "We've found some eligible products in your order. Please tell us which product you would like to return."
+      }, {
+        "parameter": "$flow.product_return_confirm_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_product_return_confirm_counter",
+        "value": 2
+      }, {
+        "parameter": "$flow.order_product_return_reason_others",
+        "value": "others"
+      }, {
+        "parameter": "$flow.retry_select_order_number_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.max_retry_select_order_number",
+        "value": 2
+      }, {
+        "parameter": "$flow.multi_store_message",
+        "value": ""
+      }, {
+        "parameter": "$flow.multiple_message_prompt",
+        "value": ""
+      } ]
+    },
+    "targetPage": "check auth level",
+    "name": "c111c950-34dd-452a-99fb-35d85ae8e854"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We didn't get that. Can you say it again?", "We missed what you said. What was that?", "Sorry, could you say that again?", "Sorry, can you say that again?", "Can you say that again?", "Sorry, we didn't get that. Can you rephrase?", "Sorry, what was that?", "One more time?", "What was that?", "Say that one more time?", "We didn't get that. Can you repeat?", "We missed that, say that again?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "d3eaac64-8590-4a79-beb2-526d8cfaea76"
+  }, {
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We didn't get that. Can you say it again?", "We missed what you said. What was that?", "Sorry, could you say that again?", "Sorry, can you say that again?", "Can you say that again?", "Sorry, we didn't get that. Can you rephrase?", "Sorry, what was that?", "One more time?", "What was that?", "Say that one more time?", "We didn't get that. Can you repeat?", "We missed that, say that again?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "c4631aa2-bd55-4413-8c56-6d160d631c9b"
+  } ],
+  "nluSettings": {
+    "modelType": "MODEL_TYPE_ADVANCED",
+    "classificationThreshold": 0.30000001,
+    "modelTrainingMode": "MODEL_TRAINING_MODE_AUTOMATIC",
+    "multiIntentSettings": {
+    
+    }
+  },
+  "advancedSettings": {
+    "enabled": true
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "name": "86c329e4-bbbf-4ad5-a6d8-8b34dada04fa",
+  "displayName": "\u003e confirm another account",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "conditionalCases": [ {
+      "cases": [ {
+        "condition": "$flow.retry_another_account_counter \u003c $flow.max_retry_another_account_counter",
+        "caseContent": [ {
+          "message": {
+            "text": {
+              "text": [ "Sorry, we do not find any orders associated with your account under $session.params.user_first_name. Are you inquiring about another person's order? Please say yes if that's the case." ]
+            },
+            "languageCode": "en"
+          }
+        } ]
+      }, {
+        "caseContent": [ {
+          "message": {
+            "text": {
+              "text": [ "Sorry, we do not find any orders associated with your account under $session.params.user_first_name." ]
+            },
+            "languageCode": "en"
+          }
+        } ]
+      } ]
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "condition": "$flow.retry_another_account_counter \u003c $flow.max_retry_another_account_counter",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "phone_number",
+        "value": null
+      }, {
+        "parameter": "user_first_name",
+        "value": null
+      }, {
+        "parameter": "$flow.retry_another_account_counter",
+        "value": "$sys.func.ADD($flow.retry_another_account_counter,1)"
+      }, {
+        "parameter": "auth_level",
+        "value": null
+      }, {
+        "parameter": "telephone_number_collection_telephone_number",
+        "value": null
+      } ]
+    },
+    "targetPage": "check auth level",
+    "name": "c1cd2ca7-35f4-4fe8-a13a-df5a47de4021"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "ef9e7abe-45cd-462c-b32b-cdc4c310a23f"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "b4fe7e05-b4bb-4637-98e1-ebf515d9cad6"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "6846f7d5-c9e1-4d8e-9302-ef52f5279e28"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Sorry, we do not find any orders associated with your account under $session.params.user_first_name. Are you inquiring about another person's order? Please say yes if that's the case."
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "407ae5bb-d3be-42d2-8d09-2bbb574d3465"
+  }, {
+    "condition": "$flow.retry_another_account_counter = $flow.max_retry_another_account_counter",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "50d90a9e-5e23-49df-9290-7e60c49ed77f"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Are you inquiring about another person's order? Please say yes if that's the case. Else say no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "c4b54bf9-0c12-4482-8803-d5e02d92c052"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Are you inquiring about another person's order? Please say yes if that's the case. Else say no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "d566924b-93da-4618-a10f-b016b140ce7f"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+    
+    },
+    "name": "ce2a8c3c-a024-4b06-b339-24794ac70ae9"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Are you inquiring about another person's order? Please say yes if that's the case. Else say no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "b1fd3de3-7ab8-40fd-9e1e-a1001505f8e9"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Are you inquiring about another person's order? Please say yes if that's the case. Else say no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "ec08f065-fc9c-480e-90c4-602c3f256c06"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+    
+    },
+    "name": "277c4a35-88c4-4e2b-beee-c9eb78f19295"
+  } ],
+  "description": "Conditional response defined at Entry fulfillment"
+}

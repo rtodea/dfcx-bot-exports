@@ -1,0 +1,20 @@
+{
+  "name": "2411b78d-292b-4dd5-8639-fc22c102b06f",
+  "displayName": "prebuilt_components_retail_services:get_duplicate_order_details",
+  "genericWebService": {
+    "uri": "https://www.example.com",
+    "webhookType": "FLEXIBLE",
+    "httpMethod": "POST",
+    "requestBody": "{\n  \"duplicate_order_id\": \"$flow.duplicate_order_id\",\n  \"fulfillmentInfo\": {\n    \"tag\": \"getDuplicateOrders\"\n  }\n}",
+    "parameterMapping": [ {
+      "key": "$flow.all_order_date",
+      "value": "all_order_date"
+    }, {
+      "key": "$flow.all_order_time",
+      "value": "all_order_time"
+    } ]
+  },
+  "timeout": {
+    "seconds": 5
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "trainingPhrases": [ {
+    "parts": [ {
+      "text": "5 5 5 5 5",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": " "
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "55 555",
+      "parameterId": "user_provided_last_five_digit_of_order_id",
+      "auto": true
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "It's of "
+    }, {
+      "text": "67822",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": "."
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "The order id reads "
+    }, {
+      "text": "12345",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": "."
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "order id is "
+    }, {
+      "text": "38235",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "Sure, that's 1234"
+    }, {
+      "text": "."
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "The 5 digit number is "
+    }, {
+      "text": "1234",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "1.2344",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "12.345",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "5 1 2 45",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "7 2   4   5 6",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": " "
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "12456",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "number is "
+    }, {
+      "text": "12344",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "41",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": " ##@"
+    }, {
+      "text": "2",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": ". "
+    }, {
+      "text": "3 5",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "72,824",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": " this is my order id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "66766",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": " here is the last 5 digit of order id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "555.54",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": " is the last 5 digit of order id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "order number is "
+    }, {
+      "text": "23451",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    }, {
+      "text": "."
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "order id: "
+    }, {
+      "text": "10001",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "The five-digit order id is "
+    }, {
+      "text": "42693",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  }, {
+    "parts": [ {
+      "text": "The 5 digit code is "
+    }, {
+      "text": "77777",
+      "parameterId": "user_provided_last_five_digit_of_order_id"
+    } ],
+    "repeatCount": 1,
+    "languageCode": "en"
+  } ]
+}

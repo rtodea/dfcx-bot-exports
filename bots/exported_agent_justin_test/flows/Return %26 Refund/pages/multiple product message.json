@@ -1,0 +1,49 @@
+{
+  "name": "d524a235-a0ed-4467-8548-61f46cc0de87",
+  "displayName": "multiple product message",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.product_display_counter \u003e= $flow.max_product_display_counter OR $sys.func.ADD($flow.product_counter, 1) = $flow.order_returnable_product_count",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$flow.products_message" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.products_message",
+        "value": "$flow.products_message Product $sys.func.ADD($flow.product_counter,1): $flow.order_returnable_product_brand_name[$sys.func.TO_NUMBER($flow.product_counter)] $flow.order_returnable_product_name[$sys.func.TO_NUMBER($flow.product_counter)]."
+      }, {
+        "parameter": "$flow.product_counter",
+        "value": "$sys.func.ADD($flow.product_counter,1)"
+      }, {
+        "parameter": "$flow.multiple_message_prompt",
+        "value": "$flow.multiple_message_prompt $flow.products_message"
+      } ]
+    },
+    "targetPage": "\u003e collect product number",
+    "name": "ef015ab4-04cf-4783-b9b3-2f7a376d539b"
+  }, {
+    "condition": "$flow.product_display_counter \u003c $flow.max_product_display_counter",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.products_message",
+        "value": "$flow.products_message Product $sys.func.ADD($flow.product_counter,1): $flow.order_returnable_product_brand_name[$sys.func.TO_NUMBER($flow.product_counter)] $flow.order_returnable_product_name[$sys.func.TO_NUMBER($flow.product_counter)],"
+      }, {
+        "parameter": "$flow.product_counter",
+        "value": "$sys.func.ADD($flow.product_counter,1)"
+      }, {
+        "parameter": "$flow.product_display_counter",
+        "value": "$sys.func.ADD($flow.product_display_counter,1)"
+      } ]
+    },
+    "targetPage": "Current Page",
+    "name": "07cef310-6581-424e-a670-cb3e0ca5a949"
+  } ]
+}

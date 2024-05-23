@@ -1,0 +1,56 @@
+{
+  "name": "08231314-9057-4bf9-840d-2e7023b27d88",
+  "displayName": "OTP not received",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.channel = \"phone\" AND $flow.retry_otp_not_received_counter \u003c $flow.max_retry_otp_not_received",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry about that. Can we send the code to your registered email?" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.retry_otp_not_received_counter",
+        "value": "$sys.func.ADD($flow.retry_otp_not_received_counter,1)"
+      }, {
+        "parameter": "$flow.new_channel",
+        "value": "email"
+      } ]
+    },
+    "targetPage": "\u003e confirm resend OTP channel",
+    "name": "756f960b-fe40-4df4-bbb0-599cc5f8dc8c"
+  }, {
+    "condition": "$flow.channel = \"email\" AND $flow.retry_otp_not_received_counter \u003c $flow.max_retry_otp_not_received",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry about that. Can we send the code to your registered phone number?" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.retry_otp_not_received_counter",
+        "value": "$sys.func.ADD($flow.retry_otp_not_received_counter, 1)"
+      }, {
+        "parameter": "$flow.new_channel",
+        "value": "phone"
+      } ]
+    },
+    "targetPage": "\u003e confirm resend OTP channel",
+    "name": "859d9cce-1b3c-4da2-854f-48d0e5bd3261"
+  }, {
+    "condition": "$flow.retry_otp_not_received_counter \u003e= $flow.max_retry_otp_not_received",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "21ab62bd-14ed-4c31-91c5-9de5f9a81dbf"
+  } ]
+}

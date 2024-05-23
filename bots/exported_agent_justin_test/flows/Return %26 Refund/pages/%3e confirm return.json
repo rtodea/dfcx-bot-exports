@@ -1,0 +1,155 @@
+{
+  "name": "bad01034-a32a-4bc2-a4c7-7632c055daf6",
+  "displayName": "\u003e confirm return",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "To confirm, you are interested in returning the $flow.order_returnable_product_brand_name[$sys.func.TO_NUMBER($flow.product_index_number)] $flow.order_returnable_product_name[$sys.func.TO_NUMBER($flow.product_index_number)]. Is this correct?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "check product quantity",
+    "name": "eeec5e7d-1081-4b63-b53b-c1cacb0f4aba"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "condition": "$flow.product_return_confirm_counter \u003c $flow.max_product_return_confirm_counter",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.product_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.product_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.product_number",
+        "value": null
+      }, {
+        "parameter": "$flow.product_return_confirm_counter",
+        "value": "$sys.func.ADD($flow.product_return_confirm_counter,1)"
+      } ]
+    },
+    "targetPage": "multiple product message",
+    "name": "0faf4a4c-e703-4ed8-b93a-ad78a5c060c0"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "e318cccb-8d61-4f2c-80fb-a312d4a49097"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "bb84a61a-e710-458c-9271-3ad22585d747"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "9a3cd20b-03fe-4cbd-80a8-f12b209caa93"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "To verify, you are interested in returning the $flow.order_returnable_product_brand_name[$sys.func.TO_NUMBER($flow.product_index_number)] $flow.order_returnable_product_name[$sys.func.TO_NUMBER($flow.product_index_number)] for return. Is this correct?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "fbf8fa2a-7f11-458c-a4e8-ddce2c77f3a8"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. To verify, you are interested in returning the $flow.order_returnable_product_brand_name[$sys.func.TO_NUMBER($flow.product_index_number)] $flow.order_returnable_product_name[$sys.func.TO_NUMBER($flow.product_index_number)] for return. Is this correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "f4b5c89b-be84-4b13-b612-541c3a4b7f78"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. To verify, you are interested in returning the $flow.order_returnable_product_brand_name[$sys.func.TO_NUMBER($flow.product_index_number)] $flow.order_returnable_product_name[$sys.func.TO_NUMBER($flow.product_index_number)] for return. Is this correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "bdd52b32-f571-4269-8080-a3988ab7a197"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "a904f8da-db7b-4f32-bb5f-2b9db8edb0bf"
+  }, {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. To verify, you are interested in returning the $flow.order_returnable_product_brand_name[$sys.func.TO_NUMBER($flow.product_index_number)] $flow.order_returnable_product_name[$sys.func.TO_NUMBER($flow.product_index_number)] for return. Is this correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "c6196ae1-8d71-49f5-8f21-38c2d92ec9a4"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. To verify, you are interested in returning the $flow.order_returnable_product_brand_name[$sys.func.TO_NUMBER($flow.product_index_number)] $flow.order_returnable_product_name[$sys.func.TO_NUMBER($flow.product_index_number)] for return. Is this correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "8c30e098-e4fd-4a53-82f5-2f64a33e6852"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "a399cb07-e5ad-4b2e-8d12-2cd4e497ceba"
+  } ]
+}

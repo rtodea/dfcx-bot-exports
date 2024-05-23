@@ -1,0 +1,127 @@
+{
+  "name": "a6df0c16-5ea2-40b2-939c-24fded209219",
+  "displayName": "\u003e confirm alternate profile",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Hello, the number you dialed is linked to $session.params.user_first_name's account. Are you inquiring about another person's account? Please say yes if that's the case, else say no." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "phone_number",
+        "value": null
+      }, {
+        "parameter": "user_first_name",
+        "value": null
+      }, {
+        "parameter": "alternate_profile",
+        "value": true
+      } ]
+    },
+    "targetPage": "\u003e collect telephone number",
+    "name": "44ec8e2f-536e-4809-8e28-6a63ea54cf86"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "auth_level",
+        "value": 1
+      } ]
+    },
+    "targetPage": "end success",
+    "name": "7209237b-62e5-4f9d-96d5-d09c7bdad14f"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "7a257020-256f-4ac8-84b3-d3340c975542"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "ec430e39-c41b-4245-96b2-da6378328dd6"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we were not able to hear you. The number you dialed is linked to $session.params.user_first_name's account. Are you inquiring about another person's account? Please say yes if that's the case, else say no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "8e8feb8a-424a-46da-b9e1-8e59782556a8"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we still cannot hear you. The number you dialed is linked to $session.params.user_first_name's account. Are you inquiring about another person's account? Please say yes if that's the case, else say no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "331253f1-7cb9-4793-a026-2d20d0ba572d"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "b7ac72de-4eba-4a5a-9ac9-7a7b8a126036"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. The number you dialed is linked to $session.params.user_first_name's account. Are you inquiring about another person's account? Please say yes if that's the case, else say no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "980bf2c3-c17e-4e09-9857-68cef3a31061"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. The number you dialed is linked to $session.params.user_first_name's account. Are you inquiring about another person's account? Please say yes if that's the case, else say no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "a40027be-fb08-4334-9782-94bb4e36c58f"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "38b37cfe-c312-4fb4-a60d-7641063c3350"
+  } ]
+}

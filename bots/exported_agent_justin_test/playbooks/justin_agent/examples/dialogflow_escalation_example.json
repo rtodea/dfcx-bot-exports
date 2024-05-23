@@ -1,0 +1,36 @@
+{
+  "name": "f36199ee-9b7a-451a-9456-dd8be7b629e5",
+  "actions": [ {
+    "userUtterance": {
+      "text": "hey i need a computer"
+    }
+  }, {
+    "agentUtterance": {
+      "text": "Hi there! I'd be happy to help you find the perfect computer for your needs. Do you have any specific requirements or preferences?"
+    }
+  }, {
+    "userUtterance": {
+      "text": "guided"
+    }
+  }, {
+    "flowInvocation": {
+      "flow": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/flows/27a607da-ec85-4840-8d16-67f1f67d1368"
+    }
+  }, {
+    "agentUtterance": {
+      "text": "Please provide your date of birth. Please say your birth month, followed by your birth day, and then your birth year."
+    }
+  }, {
+    "userUtterance": {
+      "text": "Can you help me find a computer for gaming"
+    }
+  }, {
+    "agentUtterance": {
+      "text": "Sure, I can help you with that. What type of games do you typically play?"
+    }
+  } ],
+  "displayName": "dialogflow_escalation_example",
+  "retrievalStrategy": "DEFAULT",
+  "conversationState": "OUTPUT_STATE_PENDING",
+  "languageCode": "en"
+}

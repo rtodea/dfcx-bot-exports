@@ -1,0 +1,215 @@
+{
+  "name": "ff33f066-ed86-47dd-96c5-8a6255305623",
+  "displayName": "\u003e confirm recent order",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "setParameterActions": [ {
+      "parameter": "$flow.remaining_product_count",
+      "value": "$sys.func.MINUS($flow.order_product_count, 2)"
+    }, {
+      "parameter": "$flow.last_five_digit_of_order_id",
+      "value": "$sys.func.MID($flow.order_id,$sys.func.MINUS($sys.func.LEN($flow.order_id),4),5)"
+    } ],
+    "conditionalCases": [ {
+      "cases": [ {
+        "condition": "$flow.order_returnable_product_count = 1",
+        "caseContent": [ {
+          "message": {
+            "text": {
+              "text": [ "\u003cspeak\u003eAre you calling about your most recent order number ending with \u003csay-as interpret-as=\"verbatim\"\u003e$flow.last_five_digit_of_order_id\u003c/say-as\u003e containing $flow.order_returnable_product_quantity[0] $flow.order_returnable_product_name[0] placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.order_date\u003c/say-as\u003e?\u003c/speak\u003e" ]
+            },
+            "languageCode": "en"
+          }
+        } ]
+      }, {
+        "condition": "$flow.order_returnable_product_count = 2",
+        "caseContent": [ {
+          "message": {
+            "text": {
+              "text": [ "\u003cspeak\u003eAre you calling about your most recent order number ending with \u003csay-as interpret-as=\"verbatim\"\u003e$flow.last_five_digit_of_order_id\u003c/say-as\u003e containing $flow.order_returnable_product_quantity[0] $flow.order_returnable_product_name[0] and $flow.order_returnable_product_quantity[1] $flow.order_returnable_product_name[1] placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.order_date\u003c/say-as\u003e?\u003c/speak\u003e" ]
+            },
+            "languageCode": "en"
+          }
+        } ]
+      }, {
+        "caseContent": [ {
+          "message": {
+            "text": {
+              "text": [ "\u003cspeak\u003eAre you calling about your most recent order number ending with \u003csay-as interpret-as=\"verbatim\"\u003e$flow.last_five_digit_of_order_id\u003c/say-as\u003e containing $flow.order_returnable_product_quantity[0] $flow.order_returnable_product_name[0], $flow.order_returnable_product_quantity[1] $flow.order_returnable_product_name[1], and $flow.remaining_product_count other product placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.order_date\u003c/say-as\u003e?\u003c/speak\u003e" ]
+            },
+            "languageCode": "en"
+          }
+        } ]
+      } ]
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "check order product count",
+    "name": "3d203311-6f4c-4a97-af36-8c3033a67c00"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.check_recent_order_details",
+        "value": "false"
+      } ]
+    },
+    "targetPage": "\u003e confirm return another order",
+    "name": "e0381721-f2ca-4ec9-9dde-60cbab34b137"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "7577bdd4-fd6a-427c-b175-c0efe9f9f0a7"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "e926a49d-eb76-4f06-bff9-ba312db4c40f"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "condition": "$flow.order_returnable_product_count = 1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "\u003cspeak\u003eAre you calling about your most recent order number ending with \u003csay-as interpret-as=\"verbatim\"\u003e$flow.last_five_digit_of_order_id\u003c/say-as\u003e containing $flow.order_returnable_product_quantity[0] $flow.order_returnable_product_name[0] placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.order_date\u003c/say-as\u003e?\u003c/speak\u003e"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "22317390-64d3-4103-af6b-d9001ea221e4"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "condition": "$flow.order_returnable_product_count = 2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "\u003cspeak\u003eAre you calling about your most recent order number ending with \u003csay-as interpret-as=\"verbatim\"\u003e$flow.last_five_digit_of_order_id\u003c/say-as\u003e containing $flow.order_returnable_product_quantity[0] $flow.order_returnable_product_name[0] and $flow.order_returnable_product_quantity[1] $flow.order_returnable_product_name[1] placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.order_date\u003c/say-as\u003e?\u003c/speak\u003e"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "08888713-4d56-4a2e-8256-4d96eb0d3f68"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "condition": "$flow.order_returnable_product_count != 1 AND $flow.order_returnable_product_count != 2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "\u003cspeak\u003eAre you calling about your most recent order number ending with \u003csay-as interpret-as=\"verbatim\"\u003e$flow.last_five_digit_of_order_id\u003c/say-as\u003e containing $flow.order_returnable_product_quantity[0] $flow.order_returnable_product_name[0], $flow.order_returnable_product_quantity[1] $flow.order_returnable_product_name[1], and $flow.remaining_product_count other product placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.order_date\u003c/say-as\u003e?\u003c/speak\u003e"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "cd0ebf4c-b03d-4200-a808-a413ffd81c62"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Are you calling about your most recent order for $session.params.user_first_name Please say yes or no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "4040a7a7-9243-42a9-a971-03f10690cb49"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Are you calling about your most recent order for $session.params.user_first_name Please say yes or no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "659f9f75-5a34-4d9c-bd73-3af0d23c86ab"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "c66bcaed-d8e7-488d-aafd-daf470004a5e"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Are you calling about your most recent order for $session.params.user_first_name Please say yes or no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "b7fa837a-be34-47ba-82a5-44f89024627c"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Are you calling about your most recent order for $session.params.user_first_name Please say yes or no." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "0185441e-840e-434a-bd74-d3aadb179d45"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "4a78df13-fe8b-4700-a371-ad33eaed1629"
+  } ],
+  "description": "Conditional response defined at Entry fulfillment"
+}

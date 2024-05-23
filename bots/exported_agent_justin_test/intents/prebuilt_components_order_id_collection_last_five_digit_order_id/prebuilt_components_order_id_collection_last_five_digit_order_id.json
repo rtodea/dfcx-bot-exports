@@ -1,0 +1,11 @@
+{
+  "name": "862c8d73-2275-49ca-be57-7725b9253f2a",
+  "displayName": "prebuilt_components_order_id_collection_last_five_digit_order_id",
+  "parameters": [ {
+    "id": "user_provided_last_five_digit_of_order_id",
+    "entityType": "@sys.number-sequence",
+    "isList": true
+  } ],
+  "priority": 500000,
+  "numTrainingPhrases": 21
+}

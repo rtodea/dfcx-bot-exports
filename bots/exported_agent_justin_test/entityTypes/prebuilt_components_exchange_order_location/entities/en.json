@@ -1,0 +1,11 @@
+{
+  "entities": [ {
+    "value": "exchange_at_store",
+    "synonyms": [ "exchange at store", "exchange purchase to store", "give back to store", "hand over merchandise to store", "refund item at store", "return item to merchant", "store", "store exchange", "Take back to store" ],
+    "languageCode": "en"
+  }, {
+    "value": "scheduled_for_pickup",
+    "synonyms": [ "appointment for pickup", "book for pickup", "pickup", "schedule for pickup", "schedule pickup", "scheduled for collection", "scheduled for retrieval", "scheduled to be picked up", "set for pickup" ],
+    "languageCode": "en"
+  } ]
+}

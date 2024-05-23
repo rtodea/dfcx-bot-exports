@@ -1,0 +1,121 @@
+{
+  "name": "2e7186df-2001-43d6-a92c-f7f6aa934532",
+  "displayName": "\u003e fetch order details API",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "webhook": "prebuilt_components_return_refund:get_order_details",
+    "tag": "getOrderDetails"
+  },
+  "transitionRoutes": [ {
+    "condition": "$sys.func.COUNT($flow.order_returnable_product_id) \u003c 1 AND $flow.retry_another_order_counter \u003c= $flow.max_retry_another_order",
+    "triggerFulfillment": {
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.check_recent_order_details = \"true\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Sorry, we don't find any product in your most recent order eligible for return and refund." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Sorry, there is no product in your order is eligible for return base on our policy. You can find more information about our return policy on our website." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "targetPage": "\u003e confirm return another order",
+    "name": "31a9c7cc-10b1-40e1-98f9-144656c7df33"
+  }, {
+    "condition": "$sys.func.COUNT($flow.order_returnable_product_id) \u003c 1",
+    "triggerFulfillment": {
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.check_recent_order_details = \"true\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Sorry, we don't find any product in your most recent order eligible for return." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Sorry, there is no product in your order is eligible for return base on our policy. You can find more information about our return policy on our website." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "7c34be8d-fc1e-4ed2-8c08-e55b9cca8bf7"
+  }, {
+    "condition": "$flow.check_recent_order_details = \"true\"",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.order_returnable_product_count",
+        "value": "$sys.func.COUNT($flow.order_returnable_product_id)"
+      } ]
+    },
+    "targetPage": "\u003e confirm recent order",
+    "name": "daa68076-6f3a-458a-befe-c546b8292cce"
+  }, {
+    "condition": "true",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.order_returnable_product_count",
+        "value": "$sys.func.COUNT($flow.order_returnable_product_id)"
+      } ]
+    },
+    "targetPage": "check order product count",
+    "name": "87d8ae92-589d-4e82-9db5-c15ac2a731ec"
+  } ],
+  "eventHandlers": [ {
+    "targetPage": "END_FLOW_WITH_FAILURE",
+    "event": "webhook.error",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We apologize for the inconvenience. Our system is currently experiencing technical issues. Our technical team is actively working to resolve this issue. Please try again after sometime." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "webhook_error"
+      } ]
+    },
+    "name": "59daad1c-ede6-4fca-b305-c42d2dac7cd0"
+  }, {
+    "targetPage": "END_FLOW_WITH_FAILURE",
+    "event": "webhook.error.not-found",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We apologize for the inconvenience. Our system is currently experiencing technical issues. Our technical team is actively working to resolve this issue. Please try again after sometime." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "webhook_not_found"
+      } ]
+    },
+    "name": "d1d983c3-591d-4b0d-8e53-c6ae9e5d0d25"
+  } ]
+}

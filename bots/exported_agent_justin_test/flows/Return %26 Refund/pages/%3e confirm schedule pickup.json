@@ -1,0 +1,149 @@
+{
+  "name": "9eafaf9c-2d10-41f7-acde-d634b72bad69",
+  "displayName": "\u003e confirm schedule pickup",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Would you like to initiate a scheduled pickup?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Perfect. We have sent a shipping label to your registered phone number and email. Please print it out and attach it to your package. Our team will contact you within the next 24 to 48 hours to schedule a pickup." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.order_return_location",
+        "value": "$flow.order_return_location_scheduled_for_pickup"
+      } ]
+    },
+    "targetPage": "\u003e send order return details API",
+    "name": "97c36939-bda8-43b2-b59e-b1754477f9c9"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We request you to visit our website to initiate return and refund process." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "a030ceaf-15b3-4156-adda-efefba498e96"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "d092ae49-e3e6-4737-9467-9899eadfb5b9"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "493505a6-eb10-4b0d-9674-d724fc684747"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Would you like to initiate a scheduled pickup?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "7d118a23-5a58-4b30-aa99-91ad6c8d7e94"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Would you like to initiate a scheduled pickup?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "10229807-be60-42b3-a9b3-387a06487496"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Would you like to initiate a scheduled pickup?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "dcc139e8-86a1-4a6f-a6a4-25abb9e72893"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "8fdc63f3-73f5-490c-a19e-2f0ec4da297b"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, We didn’t get that. Would you like to initiate a scheduled pickup?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "6a0a33cc-9a83-431f-a221-b2e6e2b6fa60"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Would you like to initiate a scheduled pickup?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "fed0544f-c27f-410c-8826-8a218390981f"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "1254e380-17bf-434c-a01e-0bbbf973ea42"
+  } ]
+}

@@ -1,0 +1,153 @@
+{
+  "name": "b9693314-f130-404f-b8e5-354e1d44a91a",
+  "displayName": "\u003e collect return location",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.order_return_location",
+      "required": true,
+      "entityType": "@prebuilt_components_return_refund_mode_of_return",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we are waiting for your input. How would you like to return the product? You can say something like: Return at store, or Drop off at location, or Schedule for pickup." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "154e8df1-e1cd-4b4f-a7df-6af830d1de1c"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we are still waiting for your input. How would you like to return the product? You can say something like: Return at store, or Drop off at location, or Schedule for pickup." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "24ad6eca-1a42-4659-a827-7033e5279a01"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "3af1c973-eb83-4ed4-af96-0c6a16604768"
+        }, {
+          "event": "sys.no-match-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we didn’t get that. How would you like to return the product? You can say something like: Return at store, or Drop off at location, or Schedule for pickup." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "7261f706-c05e-48b0-8eeb-339e8ef73945"
+        }, {
+          "event": "sys.no-match-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we're still not getting that. How would you like to return the product? You can say something like: Return at store, or Drop off at location, or Schedule for pickup." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "6fedaee7-04b5-47bd-b30e-0417aebc5986"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-match-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_match"
+            } ]
+          },
+          "name": "9dff414e-8752-4731-8f30-1c0e0f38cd3b"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "As a last step, how would you like to return the product? You can say something like: Return at store or Drop off at location or Schedule for pickup." ]
+      },
+      "languageCode": "en"
+    } ],
+    "setParameterActions": [ {
+      "parameter": "$flow.order_return_store_id",
+      "value": ""
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "e59627cb-3719-4902-b3ba-a654525970de"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "20a31034-3f17-41df-bfa6-cd4bc4284d67"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "As a last step, how would you like to return the product? You can say something like: Return at store or Drop off at location or Schedule for pickup."
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "d026aad7-26fc-425b-88fe-2fcb19a10ace"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.order_return_location = $flow.order_return_location_scheduled_for_pickup",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Perfect. We have sent a shipping label to your registered phone number and email. Please print it out and attach it to your package. Our team will contact you within the next 24 to 48 hours to schedule a pickup." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "\u003e send order return details API",
+    "name": "ec1f2f51-64a8-47d0-9a54-d85c97f09854"
+  }, {
+    "condition": "$page.params.status = \"FINAL\"",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e collect zip code",
+    "name": "ee4a9e28-d037-4c0b-be29-4c9028ee2b86"
+  } ]
+}

@@ -1,0 +1,235 @@
+{
+  "name": "33b2c99c-40d2-463f-82c0-59da0d52866e",
+  "displayName": "\u003e confirm OTP channel",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "conditionalCases": [ {
+      "cases": [ {
+        "condition": "$flow.channel = \"phone\"",
+        "caseContent": [ {
+          "message": {
+            "text": {
+              "text": [ "Just to confirm, would you like to receive the OTP on your phone? Please say yes or no." ]
+            },
+            "languageCode": "en"
+          }
+        } ]
+      }, {
+        "caseContent": [ {
+          "message": {
+            "text": {
+              "text": [ "Just to confirm, would you like to receive the OTP on your email? Please say yes or no." ]
+            },
+            "languageCode": "en"
+          }
+        } ]
+      } ]
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e send OTP API",
+    "name": "5b618a71-d8ba-480a-9a3c-fc607e7ab810"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "condition": "$flow.retry_otp_confirm_channel_counter \u003c $flow.max_retry_otp_confirm_channel",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.retry_otp_confirm_channel_counter",
+        "value": "$sys.func.ADD($flow.retry_otp_confirm_channel_counter, 1)"
+      }, {
+        "parameter": "$flow.channel",
+        "value": null
+      } ]
+    },
+    "targetPage": "\u003e collect OTP channel",
+    "name": "cbf8a71c-8ec8-4afa-a28e-3f4e9c6d3793"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "3747ac89-e556-4355-b96f-9d77c48aff94"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "9d537cf5-ba5c-4a2c-9c74-9382968978fb"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "condition": "$flow.retry_otp_confirm_channel_counter = $flow.max_retry_otp_confirm_channel",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "60d74e9f-e89a-4607-b434-ae5235b3dcac"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we were not able to hear you." ]
+        },
+        "languageCode": "en"
+      } ],
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.channel = \"phone\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Would you like to receive the OTP on your phone? Please say yes or no." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Would you like to receive the OTP on your email? Please say yes or no." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "name": "e65060b2-4e94-4204-9c10-2813b6ce51ab"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we still cannot hear you." ]
+        },
+        "languageCode": "en"
+      } ],
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.channel = \"phone\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Would you like to receive the OTP on your phone? Please say yes or no." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Would you like to receive the OTP on your email? Please say yes or no." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "name": "bd15765e-837f-4a5d-ba3f-a77e275cb442"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "74882411-8bfc-478d-ad74-221f313e40ee"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that." ]
+        },
+        "languageCode": "en"
+      } ],
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.channel = \"phone\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Would you like to receive the OTP on your phone? Please say yes or no." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Would you like to receive the OTP on your email? Please say yes or no." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "name": "e83e5f36-a888-496f-b9d9-c47f6050a967"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that." ]
+        },
+        "languageCode": "en"
+      } ],
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.channel = \"phone\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Would you like to receive the OTP on your phone? Please say yes or no." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Would you like to receive the OTP on your email? Please say yes or no." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "name": "d045d91c-6e2a-479a-a8ff-51f59d31a57f"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "6cce370f-4199-4712-bb60-b1f3365027fd"
+  } ],
+  "description": "conditional response in event handlers"
+}

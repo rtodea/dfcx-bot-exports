@@ -1,0 +1,160 @@
+{
+  "name": "e851542c-325d-4694-84e0-bc41c9198c95",
+  "displayName": "\u003e confirm return reason others",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "To verify, the reason for return is $flow.order_product_return_reason_other. Is this correct?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "condition": "$flow.order_returnable_product_count \u003e 1",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.return_reason_list",
+        "value": "$sys.func.APPEND($flow.return_reason_list,$flow.order_product_return_reason_other)"
+      } ]
+    },
+    "targetPage": "\u003e confirm return another item",
+    "name": "0042aab6-3774-4e21-a3e4-a8758c87268f"
+  }, {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.return_reason_list",
+        "value": "$sys.func.APPEND($flow.return_reason_list,$flow.order_product_return_reason_other)"
+      } ]
+    },
+    "targetPage": "check mode of payment",
+    "name": "ed8c585d-7d18-41b0-91bd-956b57b33f5a"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "condition": "$flow.retry_return_reason_counter \u003c $flow.max_retry_return_reason_counter",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.order_product_return_reason",
+        "value": null
+      }, {
+        "parameter": "$flow.order_product_return_reason_other",
+        "value": null
+      }, {
+        "parameter": "$flow.retry_return_reason_counter",
+        "value": "$sys.func.ADD($flow.retry_return_reason_counter,1)"
+      } ]
+    },
+    "targetPage": "\u003e collect return reason",
+    "name": "46a1452a-ac23-40aa-b32c-8ba0a4278347"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "8fbd5b3c-be6d-4c3e-957d-7bfcc385a64e"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "c443a5d5-af1e-4718-841d-594f615614ea"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end escalation",
+    "name": "9d18f110-b12d-454c-bb34-805e427c43bc"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "To verify, the reason for return is $flow.order_product_return_reason_other. Is this correct?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "1ed7918a-cb53-42f4-9353-b9effcb48b69"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. To verify, the reason for return is $flow.order_product_return_reason_other. Is that correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "c2ab9811-dc6e-4266-8a92-71f0b918f1ec"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. To verify, the reason for return is $flow.order_product_return_reason_other. Is that correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "eec40a75-e5fe-4dd5-a8ee-31f470f73a11"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "4d4ce42c-f7dc-4d37-b8de-77f99b98d2f8"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. To verify, the reason for return is $flow.order_product_return_reason_other. Is that correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "ef26c041-f2c2-4c6d-80c7-31bc26fea44d"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. To verify, the reason for return is $flow.order_product_return_reason_other. Is that correct?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "1ef42cf0-9a1d-44b0-aebd-d3fa311a7b8d"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "b101a9e8-245f-4c1d-a264-dc9ada703a1a"
+  } ]
+}

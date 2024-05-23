@@ -1,0 +1,154 @@
+{
+  "name": "f5f03337-eec0-4b47-92b0-c1d6137adf64",
+  "displayName": "\u003e confirm different zip code",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Would you like to try a different zip code?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "condition": "$flow.retry_another_zip_code_counter \u003c $flow.max_retry_another_zip_code",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "zip_code_collection_zip_code",
+        "value": null
+      }, {
+        "parameter": "$flow.retry_another_zip_code_counter",
+        "value": "$sys.func.ADD($flow.retry_another_zip_code_counter, 1)"
+      } ]
+    },
+    "targetPage": "\u003e collect zip code",
+    "name": "f2cdb827-3504-41f6-a6e2-88bb1aee32ff"
+  }, {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "You have reached maximum limit of selecting zip code." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "96d4e2dd-7d7a-4079-80eb-0d90eb46c778"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e confirm schedule pickup",
+    "name": "3afcdab3-c5b9-4e7b-ac7c-6f627f4a0e2d"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "a8305baa-9edc-487f-ad99-1c5aca679680"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "f2917e0a-2058-4a26-bd22-630c7f7c235d"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Would you like to try a different zip code?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "cde0b406-e0d4-4fbf-aa63-94e669210a2f"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Would you like to try a different zip code?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "83a5616a-1e43-4318-8dde-d45bd9351379"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Would you like to try a different zip code?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "f5efc6cb-244e-444c-b502-ebf5561c8a2c"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "9118e7ab-37d4-4e12-a2ea-0a24cc9debdc"
+  }, {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Would you like to try a different zip code?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "2318d236-f7d3-46a2-8cf4-8edbb3e2fd3b"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Would you like to try a different zip code?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "b9a57367-6e5f-434f-be37-c6128e36f3f3"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "ca9aeb4a-3f3b-4926-85cd-018c11d8ee89"
+  } ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "521b01d8-098c-46dd-8f29-2b5de5eef5a3",
+  "displayName": "end escalation",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Please hold while we transfer your call in order to assist you better." ]
+      },
+      "languageCode": "en"
+    } ],
+    "generators": [ {
+      "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/87b4e770-dfef-4fc8-931a-20dd75347636",
+      "outputParameter": "$request.generative.summarization"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "true",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "conversation_summary",
+        "value": "$request.generative.summarization"
+      } ]
+    },
+    "targetPage": "END_FLOW_WITH_HUMAN_ESCALATION",
+    "name": "d7fdbf99-5e9e-442f-84ef-8b46f23e061c"
+  } ]
+}

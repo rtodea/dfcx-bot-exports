@@ -1,0 +1,197 @@
+{
+  "name": "c2e82757-4b32-4a6c-82c9-85971e332273",
+  "displayName": "\u003e collect unique order id",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.order_number",
+      "required": true,
+      "entityType": "@sys.number",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we are waiting for your input. To select order number one say 1, to select order number two, say 2. Else say No." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "7f495d72-148b-4219-89d7-02fdcc96643f"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we are still waiting for your input. To select order number one say 1, to select order number two, say 2. Else say No." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "8b4934f5-a00b-4ca1-b11f-9c651574083d"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "0bf5fdba-4a53-4bed-9e61-8cb96c5abc2d"
+        }, {
+          "event": "sys.no-match-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we didn't get that. To select order number one say 1, to select order number two, say 2. Else say No." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "da1f6b20-fc97-4364-9b4c-3828d56c789e"
+        }, {
+          "event": "sys.no-match-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we're still not getting that. To select order number one say 1, to select order number two, say 2. Else say No." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "ae782e6f-312a-44ba-8909-827e175db580"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-match-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_match"
+            } ]
+          },
+          "name": "301f6178-cf83-4f5b-8fd5-80126a1022a7"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "\u003cspeak\u003eAs per our records, we have found $sys.func.COUNT($flow.duplicate_order_id) orders ending with same 5 digits \u003csay-as interpret-as=\"verbatim\"\u003e$flow.user_provided_last_five_digit_of_order_id\u003c/say-as\u003e. Which order are you looking for?\u003cbreak time=\"1s\"/\u003e Order number 1 which was placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.all_order_date[0]\u003c/say-as\u003e at \u003csay-as interpret-as=\"time\" format=\"hms12\"\u003e$flow.all_order_time[0]\u003c/say-as\u003e or Order number 2 which was placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.all_order_date[1]\u003c/say-as\u003e at \u003csay-as interpret-as=\"time\" format=\"hms12\"\u003e$flow.all_order_time[1]\u003c/say-as\u003e\u003c/speak\u003e" ]
+      },
+      "languageCode": "en"
+    }, {
+      "text": {
+        "text": [ "To select order number one say 1, to select order number two, say 2. Else say no." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_no",
+    "condition": "$flow.retry_order_number_counter \u003c $flow.max_retry_order_number",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.retry_order_number_counter",
+        "value": "$sys.func.ADD($flow.retry_order_number_counter,1)"
+      } ]
+    },
+    "targetPage": "\u003e collect another order id",
+    "name": "bf9cdf16-5b87-47e4-a8b2-f139251a33ee"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry. You have reached the maximum limit for searching for order ID. Please visit our website to initiate the return \u0026 refund process." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "1f2e4215-9b9e-4199-ae50-a080ef91c890"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "f13ba518-a510-478c-a2a2-8330553dfacb"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "3ee1aa79-8941-424e-aa0f-54688957cb2d"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "\u003cspeak\u003eAs per our records, we have found $sys.func.COUNT($flow.duplicate_order_id) orders ending with same 5 digits \u003csay-as interpret-as=\"verbatim\"\u003e$flow.user_provided_last_five_digit_of_order_id\u003c/say-as\u003e. Which order are you looking for?\u003cbreak time=\"1s\"/\u003e Order number 1 which was placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.all_order_date[0]\u003c/say-as\u003e at \u003csay-as interpret-as=\"time\" format=\"hms12\"\u003e$flow.all_order_time[0]\u003c/say-as\u003e or Order number 2 which was placed on \u003csay-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"1\"\u003e$flow.all_order_date[1]\u003c/say-as\u003e at \u003csay-as interpret-as=\"time\" format=\"hms12\"\u003e$flow.all_order_time[1]\u003c/say-as\u003e\u003c/speak\u003e To select order number one say 1, to select order number two, say 2. Else say no."
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "73302a9a-7724-4cb9-99ef-d95734fa3443"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.order_number \u003e 0 AND $flow.order_number \u003c= 2 AND $sys.func.ROUND($flow.order_number) = $flow.order_number",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.order_number_index",
+        "value": "$sys.func.MINUS($sys.func.TO_NUMBER($flow.order_number),1)"
+      }, {
+        "parameter": "$flow.order_id",
+        "value": "$flow.duplicate_order_id[$sys.func.TO_NUMBER($flow.order_number_index)]"
+      } ]
+    },
+    "targetPage": "\u003e fetch order details API",
+    "name": "fec06737-1832-486b-b59e-55e9fa3015ca"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.retry_select_order_number_counter \u003c $flow.max_retry_select_order_number",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get what you said. Please say the correct order number." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.order_number",
+        "value": null
+      }, {
+        "parameter": "$flow.retry_select_order_number_counter",
+        "value": "$sys.func.ADD($flow.retry_select_order_number_counter,1)"
+      } ]
+    },
+    "targetPage": "Current Page",
+    "name": "ea0363cc-e67d-41c1-a1ff-c6dd8e447d5d"
+  }, {
+    "condition": "$flow.retry_select_order_number_counter = $flow.max_retry_select_order_number AND $page.params.status = \"FINAL\"",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "eb381d7a-7757-4a72-8e95-454a11621cdc"
+  } ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "a1bb0e97-681d-4434-bae0-bc6cc9a1c1c6",
+  "displayName": "\u003e collect telephone number",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$session.params.telephone_number_collection_telephone_number = null",
+    "triggerFulfillment": {
+    
+    },
+    "targetFlow": "Telephone Number Collection",
+    "name": "074b35f1-3174-400a-aecb-2db4f5b8e2f7"
+  }, {
+    "condition": "$session.params.telephone_number_collection_telephone_number != null",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "phone_number",
+        "value": "$session.params.telephone_number_collection_telephone_number"
+      } ]
+    },
+    "targetPage": "\u003e fetch user details API",
+    "name": "87ea240f-3bab-4341-98c4-6ae06902f4ac"
+  } ],
+  "eventHandlers": [ {
+    "targetPage": "end failure",
+    "event": "flow.failed",
+    "triggerFulfillment": {
+    
+    },
+    "name": "9dfdf673-5ea0-4fd8-a5db-7ed2ba0e172b"
+  }, {
+    "targetPage": "end escalation",
+    "event": "flow.failed.human-escalation",
+    "triggerFulfillment": {
+    
+    },
+    "name": "f07b580b-e0c6-4221-b100-876caa7d8758"
+  } ]
+}

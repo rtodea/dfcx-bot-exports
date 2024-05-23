@@ -1,0 +1,13 @@
+{
+  "name": "87b4e770-dfef-4fc8-931a-20dd75347636",
+  "displayName": "Summarization",
+  "modelParameter": {
+    "temperature": 0.2,
+    "maxDecodeSteps": 512,
+    "topP": 0.94999999,
+    "topK": 40
+  },
+  "llmModelSettings": {
+    "model": "text-bison"
+  }
+}

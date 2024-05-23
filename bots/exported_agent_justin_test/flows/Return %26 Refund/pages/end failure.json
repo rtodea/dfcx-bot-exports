@@ -1,0 +1,30 @@
+{
+  "name": "bd0f294c-e738-4142-92e7-e436f1a3d064",
+  "displayName": "end failure",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Thank you for calling. We're sorry, but we are unable to proceed further without the requested information at this time." ]
+      },
+      "languageCode": "en"
+    } ],
+    "generators": [ {
+      "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/87b4e770-dfef-4fc8-931a-20dd75347636",
+      "outputParameter": "$request.generative.summarization"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "true",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "conversation_summary",
+        "value": "$request.generative.summarization"
+      } ]
+    },
+    "targetPage": "END_FLOW_WITH_FAILURE",
+    "name": "5369ece3-8316-4c6a-a379-86b366cfa6c8"
+  } ]
+}

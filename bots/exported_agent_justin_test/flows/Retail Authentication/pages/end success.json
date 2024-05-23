@@ -1,0 +1,21 @@
+{
+  "name": "19e9bd91-2ced-4491-9f90-05ad52f5fd83",
+  "displayName": "end success",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "true",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "origin",
+        "value": null
+      } ]
+    },
+    "targetPage": "End Flow",
+    "name": "0f44a5c5-bcd7-4596-b390-c67cc829abb6"
+  } ]
+}

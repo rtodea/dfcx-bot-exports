@@ -1,0 +1,33 @@
+{
+  "name": "589f0ae8-d3c8-483b-b1f1-0ae80f9f43c3",
+  "displayName": "validate phone number",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "setParameterActions": [ {
+      "parameter": "phone_number",
+      "value": "$sys.func.CONCATENATE($sys.func.GET_FIELD($sys.func.TO_PHONE_NUMBER($session.params.phone_number), \"area-code\"), $sys.func.GET_FIELD($sys.func.TO_PHONE_NUMBER($session.params.phone_number), \"number\"))"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "$session.params.phone_number = $sys.func.TO_TEXT($sys.func.TO_NUMBER($session.params.phone_number))",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e fetch user details API",
+    "name": "66c5ca6d-7e18-46b8-be8b-e2777e5a865b"
+  }, {
+    "condition": "true",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "To assist you better, please tell us the phone number associated with your order." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "\u003e collect telephone number",
+    "name": "35abf858-9171-48be-8dc9-bf9eaaad2f41"
+  } ]
+}

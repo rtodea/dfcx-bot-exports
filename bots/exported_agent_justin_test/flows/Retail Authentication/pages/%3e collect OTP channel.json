@@ -1,0 +1,117 @@
+{
+  "name": "ac88321c-6f19-4273-8dca-ddbb0c53fa45",
+  "displayName": "\u003e collect OTP channel",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.channel",
+      "required": true,
+      "entityType": "@prebuilt_components_channel_email_phone",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we were not able to hear you. Do you prefer to receive the code by phone or by email?" ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "ae68427f-54e1-43b0-93cc-e715aad2e981"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we still cannot hear you. Do you prefer to receive the code by phone or by email?" ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "2755e06b-d07f-45e7-b00c-c0cafa1be590"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "5faf292c-e5da-483b-952f-b3bb628ff8a3"
+        }, {
+          "event": "sys.no-match-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we didn’t get that. Do you prefer to receive the code by phone or by email?" ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "20978bb4-9bfb-4d4f-9fdf-8a287e468035"
+        }, {
+          "event": "sys.no-match-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we're still not getting that. Do you prefer to receive the code by phone or by email?" ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "aad5cd79-e895-4738-b90b-d6dc7c77517a"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-match-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_match"
+            } ]
+          },
+          "name": "e30f134d-6c74-4292-80a9-e0b87f48b9f6"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "\u003cspeak\u003eFor security purposes, we need to validate your identity, so we will send you a code. Do you prefer to receive the code by phone or by email?\u003cbreak time=\"1s\"/\u003e\u003c/speak\u003e" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "3920023c-0c73-45bd-96be-8e546efb432e"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "7daaf672-5722-4da6-adbf-751cef6fd8da"
+  }, {
+    "condition": "$page.params.status = \"FINAL\"",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e confirm OTP channel",
+    "name": "34f89223-9a14-4889-97dd-3bb188ad5188"
+  } ]
+}

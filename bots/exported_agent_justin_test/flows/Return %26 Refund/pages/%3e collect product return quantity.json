@@ -1,0 +1,166 @@
+{
+  "name": "d83214d9-1d78-4b0b-9d29-bbd325e0e2ee",
+  "displayName": "\u003e collect product return quantity",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.order_product_quantity_return_count",
+      "required": true,
+      "entityType": "@sys.number",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we are waiting for your input. We can see that the available quantity of the product that you have selected is $flow.selected_product_quantity. How many of them would you like to return?" ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "ce617a93-0e19-4ebd-b68c-3b2df57898b8"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we are still waiting for your input. We can see that the available quantity of the product that you have selected is $flow.selected_product_quantity. How many of them would you like to return?" ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "e728bea7-5565-4354-b03c-24e1fd431fe8"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "1992a777-ab65-4f97-8a3d-2da20ddae0bc"
+        }, {
+          "event": "sys.no-match-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we didn’t get that. We can see that the available quantity of the product that you have selected is $flow.selected_product_quantity. How many of them would you like to return?" ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "63d153cb-2a0c-4761-8433-225c4e3aa121"
+        }, {
+          "event": "sys.no-match-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we're still not getting that. We can see that the available quantity of the product that you have selected is $flow.selected_product_quantity. How many of them would you like to return?" ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "a371d7d8-a550-4070-81e6-3bab21da30d8"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-match-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_match"
+            } ]
+          },
+          "name": "4908a479-5992-4d41-b4bf-7c9b1ee7e1d3"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "We can see that the available quantity of the product that you have selected is $flow.selected_product_quantity. Please specify the quantity of products you wish to return." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "eb12e887-ee94-4c16-bf3c-966e865d8997"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "3dcea8b4-f20d-4609-84b0-d31afd414233"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "We can see that the available quantity of the product that you have selected is $flow.selected_product_quantity. Please specify the quantity of products you wish to return."
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "1262e967-a73b-4bc4-a4e7-39160a63979a"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.order_product_quantity_return_count \u003c= $flow.selected_product_quantity AND $flow.order_product_quantity_return_count \u003e 0 AND $sys.func.ROUND($flow.order_product_quantity_return_count) = $flow.order_product_quantity_return_count",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.return_product_quantity_list",
+        "value": "$sys.func.APPEND($flow.return_product_quantity_list,$flow.order_product_quantity_return_count)"
+      } ]
+    },
+    "targetPage": "\u003e collect return reason",
+    "name": "a820e82d-cdfc-40d8-9f2b-11ba9cf9b4dd"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.retry_select_quantity \u003c $flow.max_retry_select_quantity",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Unfortunately, your input is not valid. Please select from the available quantity to continue." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.retry_select_quantity",
+        "value": "$sys.func.ADD($flow.retry_select_quantity,1)"
+      }, {
+        "parameter": "$flow.order_product_quantity_return_count",
+        "value": null
+      } ]
+    },
+    "targetPage": "Current Page",
+    "name": "7fdbef8f-e743-41dd-a1fb-a1cb7051d0cb"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.retry_select_quantity = $flow.max_retry_select_quantity",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "7cec101d-88a7-4bf5-8625-b540bb08ff97"
+  } ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "49ae9ccd-08b4-4285-9601-1765e0987aa1",
+  "displayName": "route_test",
+  "transitionRoutes": [ {
+    "intent": "test",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "test pass" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "c8657dcf-5cca-484f-b114-231e1fb6df08"
+  } ]
+}

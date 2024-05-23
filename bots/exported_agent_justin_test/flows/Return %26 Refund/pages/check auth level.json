@@ -1,0 +1,43 @@
+{
+  "name": "6b95979d-182d-4761-ab6e-efdac234f1a5",
+  "displayName": "check auth level",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "setParameterActions": [ {
+      "parameter": "auth_level_req",
+      "value": 0
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "$session.params.auth_level = null OR $session.params.auth_level \u003c $session.params.auth_level_req",
+    "triggerFulfillment": {
+    
+    },
+    "targetFlow": "Retail Authentication",
+    "name": "60276569-6411-4209-8501-7226552301f1"
+  }, {
+    "condition": "$session.params.auth_level \u003e= $session.params.auth_level_req",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "validate order count",
+    "name": "e80203aa-2cf8-4e3a-9ff4-765088f04856"
+  } ],
+  "eventHandlers": [ {
+    "targetPage": "end failure",
+    "event": "flow.failed",
+    "triggerFulfillment": {
+    
+    },
+    "name": "dd573748-031c-45d2-be3c-593d3d3afe02"
+  }, {
+    "targetPage": "end escalation",
+    "event": "flow.failed.human-escalation",
+    "triggerFulfillment": {
+    
+    },
+    "name": "28586b85-8efc-45c0-83a2-fdfe717f6d42"
+  } ]
+}

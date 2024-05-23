@@ -1,0 +1,19 @@
+{
+  "name": "6f3d0625-5a4d-4b22-9c77-a062157613a7",
+  "actions": [ {
+    "userUtterance": {
+      "text": "guided"
+    }
+  }, {
+    "flowInvocation": {
+      "flow": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/flows/7fb335cd-ac76-49a6-9e34-0e671af81345"
+    }
+  } ],
+  "playbookOutput": {
+    "executionSummary": "take to the guided flow when someone says guided"
+  },
+  "displayName": "guided",
+  "retrievalStrategy": "STATIC",
+  "conversationState": "OUTPUT_STATE_ESCALATED",
+  "languageCode": "en"
+}

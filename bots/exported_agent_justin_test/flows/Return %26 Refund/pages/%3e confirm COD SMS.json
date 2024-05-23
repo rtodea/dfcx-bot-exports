@@ -1,0 +1,138 @@
+{
+  "name": "28b1cdf5-0aa8-44a5-b2ab-390367b18015",
+  "displayName": "\u003e confirm COD SMS",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Would you like to receive it via SMS as well?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.channel",
+        "value": "phone"
+      } ]
+    },
+    "targetPage": "\u003e send COD refund details API",
+    "name": "e14fba2c-33f3-40d8-8a89-83fc78f7fa9e"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e collect return location",
+    "name": "8288547b-963b-4861-a9b6-10f49f8045cf"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "1ac445dc-11ba-4951-bf9d-1855dfebdc5d"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "d3e3bcb3-512a-45ae-ac7b-f2f117e059b3"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Would you like to receive it via SMS as well?"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "62d2ce4a-ab41-4a46-9aa5-1bc0e539c7ce"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Would you like to receive it via SMS?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "ec756031-49c7-4b98-a06e-1022fe2e0f15"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we're still not getting that. Would you like to receive it via SMS?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "1b5fdcf7-977a-44b2-b02f-ec727770956b"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "e63d258d-ca77-41d0-9eb4-6a0fdb96ae06"
+  }, {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we are waiting for your input. Would you like to receive it via SMS?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "39fdf21c-eea0-4803-8cf4-59910988c9b1"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hmm, we are still waiting for your input. Would you like to receive it via SMS?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "3f424012-5e66-493f-b2d0-e53d6c8ff2f0"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "9628a5c3-39f6-417c-8bd6-89f7da75073c"
+  } ]
+}

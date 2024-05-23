@@ -1,0 +1,20 @@
+{
+  "name": "3c576df7-5400-4652-8aaa-5940d8613c7b",
+  "displayName": "prebuilt_components_return_refund:get_store_details",
+  "genericWebService": {
+    "uri": "https://www.example.com",
+    "webhookType": "FLEXIBLE",
+    "httpMethod": "POST",
+    "requestBody": "{\n  \"zip_code\": \"$flow.zip_code\",\n  \"return_location\": \"$flow.order_return_location\",\n  \"fulfillmentInfo\": {\n    \"tag\": \"getStoreDetails\"\n  }\n}",
+    "parameterMapping": [ {
+      "key": "$flow.store_address",
+      "value": "store_address"
+    }, {
+      "key": "$flow.store_id",
+      "value": "store_id"
+    } ]
+  },
+  "timeout": {
+    "seconds": 5
+  }
+}

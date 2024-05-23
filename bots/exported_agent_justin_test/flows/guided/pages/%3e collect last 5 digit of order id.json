@@ -1,0 +1,34 @@
+{
+  "name": "e3325216-627c-48bd-adc2-7f1880ec9cb9",
+  "displayName": "\u003e collect last 5 digit of order id",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Would you like a computer for business or personal use?" ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "business",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "business sweet" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "66638d89-2c83-4569-b051-2b288c1889b8"
+  }, {
+    "condition": "true",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "test",
+    "name": "6d1b5457-bf54-455a-bc42-752c048926c8"
+  } ]
+}

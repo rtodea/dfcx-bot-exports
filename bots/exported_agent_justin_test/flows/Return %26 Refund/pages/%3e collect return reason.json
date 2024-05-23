@@ -1,0 +1,169 @@
+{
+  "name": "56a21dea-11c1-4791-acb8-459a91a7713a",
+  "displayName": "\u003e collect return reason",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.order_product_return_reason",
+      "required": true,
+      "entityType": "@prebuilt_components_return_refund_reason",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-match-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we didn’t get that. Please specify the reason for return." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "9890113c-2c08-4b24-9244-3e6751e37f89"
+        }, {
+          "event": "sys.no-match-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we're still not getting that. Please specify the reason for return." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "87c8a523-c1ed-43aa-aa83-13adf69c71a1"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-match-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_match"
+            } ]
+          },
+          "name": "8edea7b7-08e1-41a2-9ccc-f826283544bb"
+        }, {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we are waiting for your input. Please specify the reason for return." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "bd38331c-f583-4ca1-a0e8-b3ad15059fcc"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we are still waiting for your input. Please specify the reason for return." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "20612a66-6b27-4159-a988-d00f948f9eb1"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "26d03abe-8fd2-4a17-88aa-80645c117f5d"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Please specify the reason for return. You may say something like: item defective or doesn't work, no longer needed, size or fit issue, wrong item was sent, item arrived too late, bought by mistake or say others." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "94ad3220-388e-4585-8432-36cb6b8835a4"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "aab5c748-9ff8-4bc9-9f0e-806a64426f43"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Please specify the reason for return. You may say something like: item defective or doesn't work, no longer needed, size or fit issue, wrong item was sent, item arrived too late, bought by mistake or say others."
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "644b876f-4648-4293-95fc-dea8e5d1942e"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.order_product_return_reason = $flow.order_product_return_reason_others",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e collect return reason others",
+    "name": "1a3be047-8fac-46f3-8a09-8a44e2e53c0b"
+  }, {
+    "condition": "$flow.order_returnable_product_count \u003e 1 AND $page.params.status = \"FINAL\"",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Thank you for letting us know." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.return_reason_list",
+        "value": "$sys.func.APPEND($flow.return_reason_list,$flow.order_product_return_reason)"
+      } ]
+    },
+    "targetPage": "\u003e confirm return another item",
+    "name": "b4130087-02c3-4ba9-adda-ee23b253070b"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.order_returnable_product_count = 1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Thank you for letting us know." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.return_reason_list",
+        "value": "$sys.func.APPEND($flow.return_reason_list,$flow.order_product_return_reason)"
+      } ]
+    },
+    "targetPage": "check mode of payment",
+    "name": "8891ee74-8da8-4626-b9e5-7c9b43587696"
+  } ]
+}

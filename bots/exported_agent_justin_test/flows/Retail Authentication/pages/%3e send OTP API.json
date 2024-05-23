@@ -1,0 +1,79 @@
+{
+  "name": "221fece4-6fd9-4bf3-a220-475b0c488f78",
+  "displayName": "\u003e send OTP API",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "webhook": "prebuilt_components_retail_authentication:send_otp",
+    "tag": "sendOTP"
+  },
+  "transitionRoutes": [ {
+    "condition": "true",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "last_4_digits",
+        "value": "$sys.func.MID($session.params.phone_number,$sys.func.MINUS($sys.func.LEN($session.params.phone_number),3),4)"
+      } ],
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.channel = \"phone\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "\u003cspeak\u003eWe have sent a code to your registered phone number ending with \u003csay-as interpret-as=\"verbatim\" google:style='zero-as-zero'\u003e$session.params.last_4_digits\u003c/say-as\u003e. This may take a few seconds. Can you please confirm the code?\u003c/speak\u003e" ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "condition": "$flow.channel = \"email\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "We have sent a code to your registered email address. This may take a few seconds. Can you please confirm the code?" ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "targetPage": "\u003e collect OTP code",
+    "name": "51ca0649-5e7c-4e6e-ae7d-0a5894520535"
+  } ],
+  "eventHandlers": [ {
+    "targetPage": "end failure",
+    "event": "webhook.error",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We apologize for the inconvenience. Our system is currently experiencing technical issues. Our technical team is actively working to resolve this issue. Please try again after sometime." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "webhook_error"
+      } ]
+    },
+    "name": "91e7474e-b398-4df0-a0f0-d77107bc51e1"
+  }, {
+    "targetPage": "end failure",
+    "event": "webhook.error.not-found",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We apologize for the inconvenience. Our system is currently experiencing technical issues. Our technical team is actively working to resolve this issue. Please try again after sometime." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "webhook_not_found"
+      } ]
+    },
+    "name": "73f5b17c-4160-43e4-b763-75aaf2df7a42"
+  } ],
+  "description": "Conditional response defined at 'true' route."
+}

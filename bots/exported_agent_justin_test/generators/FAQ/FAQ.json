@@ -1,0 +1,13 @@
+{
+  "name": "70f01675-b4d1-489c-a148-1ac3cdf428a2",
+  "displayName": "FAQ",
+  "modelParameter": {
+    "temperature": 0.5,
+    "maxDecodeSteps": 128,
+    "topP": 0.94999999,
+    "topK": 40
+  },
+  "llmModelSettings": {
+    "model": "text-bison"
+  }
+}

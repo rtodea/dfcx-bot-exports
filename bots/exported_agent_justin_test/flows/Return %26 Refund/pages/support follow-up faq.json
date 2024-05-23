@@ -1,0 +1,140 @@
+{
+  "name": "239a4dc3-689b-4f86-9f14-37c8ecaba593",
+  "displayName": "support follow-up faq",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Did that answer your question? Please respond with a yes or no." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "Current Page",
+    "name": "2a263197-5996-4ef8-b05b-f27fb8f9bda7"
+  }, {
+    "intent": "prebuilt_components_confirmation_no",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sure, how may I assist you further?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "4ce764a2-5402-4226-9d9e-68b027801a26"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "ee614bfd-335b-4298-86f1-9a19be653348"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "435b89e6-68a4-4671-bc20-e81f810bd981"
+  }, {
+    "intent": "prebuilt_components_confirmation_yes",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$flow.last_prompt" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "Previous Page",
+    "name": "95071f0d-ebae-442e-a7e7-3d3874389362"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-match-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Is there any other additional questions you need help with?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "54b96c6d-171b-4955-8712-00a2d663eb3e"
+  }, {
+    "event": "sys.no-match-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get that. Do you have any other questions that need answering?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "cd821173-526d-4196-9307-9fa96c63cf8b"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_match"
+      } ]
+    },
+    "name": "863652d0-d8ff-491f-a6b4-390764bbd3fa"
+  }, {
+    "event": "sys.no-input-1",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we were not able to hear you. Do you have any other questions that need answering?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "4c38c26c-6d71-48c3-bf6b-e250a8902f27"
+  }, {
+    "event": "sys.no-input-2",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we were not able to hear you.  Do you have any other questions that need answering?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "efdf51d2-8aed-479b-989e-3bc350a7b17a"
+  }, {
+    "targetPage": "end failure",
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "max_no_input"
+      } ]
+    },
+    "name": "3c1d4039-fb54-467c-9207-d83c99994723"
+  } ]
+}

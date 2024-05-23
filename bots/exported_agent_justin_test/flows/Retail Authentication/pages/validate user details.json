@@ -1,0 +1,50 @@
+{
+  "name": "8cd714f6-dc64-4742-ab0d-181862497f42",
+  "displayName": "validate user details",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "($session.params.user_first_name = null OR $session.params.user_first_name = \"\") AND $flow.retry_phone_number_counter \u003c $flow.max_retry_phone_number",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We couldn’t find this phone number associated with us. Kindly provide us with the registered phone number." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "telephone_number_collection_telephone_number",
+        "value": null
+      }, {
+        "parameter": "$flow.retry_phone_number_counter",
+        "value": "$sys.func.ADD($flow.retry_phone_number_counter, 1)"
+      } ]
+    },
+    "targetPage": "\u003e collect telephone number",
+    "name": "3ba09715-976f-471e-8013-df053dabf8f1"
+  }, {
+    "condition": "$session.params.user_first_name != null",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "phone_number",
+        "value": "$session.params.telephone_number_collection_telephone_number"
+      }, {
+        "parameter": "telephone_number_collection_telephone_number",
+        "value": null
+      } ]
+    },
+    "targetPage": "\u003e collect OTP channel",
+    "name": "91f414ab-f26a-4836-8dc9-261356bd9953"
+  }, {
+    "condition": "$flow.retry_phone_number_counter = $flow.max_retry_phone_number",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "ee310479-83af-463d-b08c-4b052271464d"
+  } ]
+}

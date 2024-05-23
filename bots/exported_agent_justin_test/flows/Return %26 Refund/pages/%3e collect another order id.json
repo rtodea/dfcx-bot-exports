@@ -1,0 +1,46 @@
+{
+  "name": "8727ae36-fb88-4769-81c2-a2b550963376",
+  "displayName": "\u003e collect another order id",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$session.params.user_provided_last_five_digit_of_order_id = null",
+    "triggerFulfillment": {
+    
+    },
+    "targetFlow": "guided",
+    "name": "b9ae039c-6a42-48b6-832b-d50e612b7dd0"
+  }, {
+    "condition": "$session.params.user_provided_last_five_digit_of_order_id != null",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.user_provided_last_five_digit_of_order_id",
+        "value": "$session.params.user_provided_last_five_digit_of_order_id"
+      }, {
+        "parameter": "user_provided_last_five_digit_of_order_id",
+        "value": null
+      } ]
+    },
+    "targetPage": "validate order id",
+    "name": "e04f7552-1da3-4139-86ad-29f84e5eb460"
+  } ],
+  "eventHandlers": [ {
+    "targetPage": "end failure",
+    "event": "flow.failed",
+    "triggerFulfillment": {
+    
+    },
+    "name": "ef22ac5b-4829-4c1d-a02a-1aeec18ee7be"
+  }, {
+    "targetPage": "end escalation",
+    "event": "flow.failed.human-escalation",
+    "triggerFulfillment": {
+    
+    },
+    "name": "365edab7-5a96-4fb9-b034-590c253b4547"
+  } ]
+}

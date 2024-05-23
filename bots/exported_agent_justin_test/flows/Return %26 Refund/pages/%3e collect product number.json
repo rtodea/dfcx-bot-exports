@@ -1,0 +1,250 @@
+{
+  "name": "ab78643a-4442-4bd5-ae30-bc5595aef85b",
+  "displayName": "\u003e collect product number",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.product_number",
+      "required": true,
+      "entityType": "@sys.number",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we are waiting for your input. Please say or enter the product number of the item you want to select or else say next to show more products." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "a82a64ae-a2e2-4029-8ca2-b3d73f3ad2d6"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we are still waiting for your input. Please say or enter the product number of the item you want to select or else say next to show more products." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "bdbe8092-a573-46ac-a465-cbd54dc1069f"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "d593e23d-aa37-4aaa-aba1-aea2acdd54ac"
+        }, {
+          "event": "sys.no-match-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we didn’t get that. Please say or enter the product number of the item you want to select or else say next to show more products." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "f4263f81-ca13-41b9-b594-1f90a8708c05"
+        }, {
+          "event": "sys.no-match-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we're still not getting that. Please say or enter the product number of the item you want to select or else say next to show more products." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "d2b9717a-a506-44fd-a194-8d40e01af135"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-match-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_match"
+            } ]
+          },
+          "name": "884007dc-5880-4390-8826-db5df421dd55"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Please say or enter the product number of the item you want to select, or else say next to show more products." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_show_more_products",
+    "condition": "$flow.product_counter \u003c $flow.max_product_display AND $flow.product_counter \u003c $flow.order_returnable_product_count",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.product_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.products_message",
+        "value": ""
+      } ]
+    },
+    "targetPage": "multiple product message",
+    "name": "865bdfff-e1cc-42f2-b9a2-639ab88e960a"
+  }, {
+    "intent": "prebuilt_components_show_more_products",
+    "condition": "$flow.product_counter = $flow.order_returnable_product_count AND $flow.all_products_displayed_counter = 0",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "We don't find any other items in our records. Please choose from the shared list." ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.product_display_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.product_counter",
+        "value": 0
+      }, {
+        "parameter": "$flow.all_products_displayed_counter",
+        "value": "$sys.func.ADD($flow.all_products_displayed_counter,1)"
+      }, {
+        "parameter": "$flow.products_message",
+        "value": ""
+      } ]
+    },
+    "targetPage": "multiple product message",
+    "name": "75bb026e-756e-4fbd-a689-2e448f8c580c"
+  }, {
+    "intent": "prebuilt_components_show_more_products",
+    "triggerFulfillment": {
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.product_counter = $flow.max_product_display",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "We would like to inform you that we have a maximum limit of 9 items for returns and refunds. As you exceeded this limit, we kindly request you to visit our website to persue further options." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "We don't find any other items in our records." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "5417d39b-eee6-4e1a-ae0e-e32eff6e4f6d"
+  }, {
+    "intent": "prebuilt_components_return_refund_item_not_listed",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, but no other product from this order is eligible for return. You can find more information about our return policy on our website." ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "\u003e confirm return another order",
+    "name": "bd740b02-f157-42c2-91fa-59ee4e123cbc"
+  }, {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "fa1f2334-f42c-47ea-92ce-d3c082f78b07"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "6de80762-82f0-4459-ab20-d0f1e78cea1a"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "$flow.multiple_message_prompt. Please say or enter the product number of the item you want to select, or else say next to show more products."
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "60b366f6-279b-4dab-b5fd-59a2aa983be9"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.product_number \u003c= $flow.order_returnable_product_count AND $flow.product_number \u003e 0 AND $sys.func.ROUND($flow.product_number) = $flow.product_number",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.product_index_number",
+        "value": "$sys.func.MINUS($flow.product_number,1)"
+      }, {
+        "parameter": "$flow.products_message",
+        "value": ""
+      } ]
+    },
+    "targetPage": "\u003e confirm return",
+    "name": "ab7252d2-ce55-4fb1-bac1-83cbd87c7713"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.retry_product_number_counter \u003c $flow.max_retry_product_number_counter",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Sorry, we didn’t get what you said. Please say the correct product number. $flow.products_message" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.retry_product_number_counter",
+        "value": "$sys.func.ADD($flow.retry_product_number_counter,1)"
+      }, {
+        "parameter": "$flow.product_number",
+        "value": null
+      } ]
+    },
+    "targetPage": "Current Page",
+    "name": "04f0a1db-20a5-4941-8b8e-60ae9a770766"
+  }, {
+    "condition": "$flow.retry_product_number_counter = $flow.max_retry_product_number_counter AND $page.params.status = \"FINAL\"",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "b8b7f6f3-c142-4109-bba1-8a63aa486782"
+  } ],
+  "description": "Conditional response defined at 3rd Route"
+}

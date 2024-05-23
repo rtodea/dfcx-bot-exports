@@ -1,0 +1,32 @@
+{
+  "name": "1fd69fa9-f705-41d2-864d-7ff24b843ecb",
+  "displayName": "check auth level required",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$session.params.auth_level_req \u003c 1 OR $session.params.auth_level = 1",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e confirm alternate profile",
+    "name": "59019ffb-39ac-4f62-9210-a29e980982cb"
+  }, {
+    "condition": "$session.params.auth_level_req = 1 AND $session.params.auth_level \u003c 1",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e collect OTP channel",
+    "name": "e8eb0307-5b0c-468c-87dc-c4e3d838dca2"
+  }, {
+    "condition": "true",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "end failure",
+    "name": "d6476b29-bdbb-4be4-86a3-a01e9cb5fcfc"
+  } ]
+}

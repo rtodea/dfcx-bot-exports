@@ -1,0 +1,41 @@
+{
+  "defaultLanguageCode": "en",
+  "timeZone": "America/Los_Angeles",
+  "projectNumber": 604594715070,
+  "speechToTextSettings": {
+  
+  },
+  "advancedSettings": {
+    "audioExportGcsDestination": {
+    
+    },
+    "speechSettings": {
+      "endpointerSensitivity": 90,
+      "noSpeechTimeout": {
+        "seconds": 5
+      }
+    },
+    "playbackInterruptionSettings": {
+    
+    },
+    "loggingSettings": {
+    
+    }
+  },
+  "speakerIdSettings": {
+  
+  },
+  "textToSpeechSettings": {
+  
+  },
+  "genAppBuilderSettings": {
+    "engine": "projects/604594715070/locations/global/collections/default_collection/engines/b812e02f-766f-42e8-9766-99cd8ebe0e4f"
+  },
+  "duplexSettings": {
+  
+  },
+  "startPlaybook": "justin_agent",
+  "webClientSettings": {
+    "boxBorderRadius": "0"
+  }
+}

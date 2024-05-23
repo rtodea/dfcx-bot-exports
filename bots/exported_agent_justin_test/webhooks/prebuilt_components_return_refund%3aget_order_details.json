@@ -1,0 +1,35 @@
+{
+  "name": "04ba29a7-f47b-457a-8b73-d95d36048393",
+  "displayName": "prebuilt_components_return_refund:get_order_details",
+  "genericWebService": {
+    "uri": "https://www.example.com",
+    "webhookType": "FLEXIBLE",
+    "httpMethod": "POST",
+    "requestBody": "{\n  \"order_id\": \"$flow.order_id\",\n  \"fulfillmentInfo\": {\n    \"tag\": \"getOrderDetails\"\n  }\n}",
+    "parameterMapping": [ {
+      "key": "$flow.order_date",
+      "value": "order_date"
+    }, {
+      "key": "$flow.order_payment_mode",
+      "value": "order_payment_mode"
+    }, {
+      "key": "$flow.order_product_count",
+      "value": "order_product_count"
+    }, {
+      "key": "$flow.order_returnable_product_brand_name",
+      "value": "returnable_product_brand_name"
+    }, {
+      "key": "$flow.order_returnable_product_id",
+      "value": "returnable_product_id"
+    }, {
+      "key": "$flow.order_returnable_product_name",
+      "value": "returnable_product_name"
+    }, {
+      "key": "$flow.order_returnable_product_quantity",
+      "value": "returnable_product_quantity"
+    } ]
+  },
+  "timeout": {
+    "seconds": 5
+  }
+}

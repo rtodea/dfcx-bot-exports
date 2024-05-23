@@ -1,0 +1,13 @@
+{
+  "name": "b8541543-335f-4b20-a0a6-c996c511e008",
+  "displayName": "prebuilt_components_return_refund:send_COD_refund_information",
+  "genericWebService": {
+    "uri": "https://www.example.com",
+    "webhookType": "FLEXIBLE",
+    "httpMethod": "POST",
+    "requestBody": "{\n  \"phone_number\": \"$session.params.phone_number\",\n  \"order_id\": \"$flow.order_id\",\n  \"channel\": \"$flow.channel\",\n  \"fulfillmentInfo\": {\n    \"tag\": \"sendCODInformation\"\n  }\n}"
+  },
+  "timeout": {
+    "seconds": 5
+  }
+}

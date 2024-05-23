@@ -1,0 +1,43 @@
+{
+  "name": "a72a036c-757b-412d-a84c-d0d6c8861797",
+  "displayName": "multiple store message",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Address $sys.func.ADD($flow.store_counter,1): $flow.store_address[$sys.func.TO_NUMBER($flow.store_counter)]." ]
+      },
+      "languageCode": "en"
+    } ],
+    "setParameterActions": [ {
+      "parameter": "$flow.multi_store_message",
+      "value": "$flow.multi_store_message Address $sys.func.ADD($flow.store_counter,1): $flow.store_address[$sys.func.TO_NUMBER($flow.store_counter)]."
+    } ]
+  },
+  "transitionRoutes": [ {
+    "condition": "$flow.store_display_counter \u003e= $flow.max_store_display_counter OR $sys.func.ADD($flow.store_counter, 1) = $sys.func.COUNT($flow.store_id)",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.store_counter",
+        "value": "$sys.func.ADD($flow.store_counter,1)"
+      } ]
+    },
+    "targetPage": "\u003e collect store",
+    "name": "7b570bb9-70f8-4b06-b7d2-5e08e40e6c24"
+  }, {
+    "condition": "$flow.store_display_counter \u003c $flow.max_store_display_counter",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.store_counter",
+        "value": "$sys.func.ADD($flow.store_counter,1)"
+      }, {
+        "parameter": "$flow.store_display_counter",
+        "value": "$sys.func.ADD($flow.store_display_counter,1)"
+      } ]
+    },
+    "targetPage": "Current Page",
+    "name": "3cadb29b-b310-47c6-bc4f-1bc7008931a6"
+  } ]
+}

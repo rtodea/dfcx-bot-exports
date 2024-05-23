@@ -1,0 +1,22 @@
+{
+  "name": "00000000-0000-0000-0000-000000000000",
+  "displayName": "Default Generative Agent",
+  "goal": "Your goal is to collect the date of birth in a delightful way.\n",
+  "steps": [ {
+    "text": "Greet the users, then ask them if they want to provide their date of birth"
+  }, {
+    "text": "If yes is said, transition user to ${FLOW:27a607da-ec85-4840-8d16-67f1f67d1368}."
+  }, {
+    "text": "Thank the user for their business and say goodbye."
+  } ],
+  "referencedFlows": [ "projects/api-project-604594715070/locations/global/agents/864bbdc2-9645-42fd-8185-c4a28fb27559/flows/27a607da-ec85-4840-8d16-67f1f67d1368" ],
+  "instruction": {
+    "steps": [ {
+      "text": "Greet the users, then ask them if they want to provide their date of birth"
+    }, {
+      "text": "If yes is said, transition user to ${FLOW:27a607da-ec85-4840-8d16-67f1f67d1368}."
+    }, {
+      "text": "Thank the user for their business and say goodbye."
+    } ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "name": "00000000-0000-0000-0000-000000000000",
+  "displayName": "Default Start Flow",
+  "description": "A start flow created along with the agent",
+  "transitionRoutes": [ {
+    "intent": "Default Welcome Intent",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "Hi! How are you doing?", "Hello! How can I help you?", "Good day! What can I do for you today?", "Greetings! How can I assist?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "5a30046a-2be9-447d-9eee-14374af95c9d"
+  }, {
+    "intent": "test",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "test passed" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "b40f7f47-e44e-4e95-a878-1e749c211bbb"
+  }, {
+    "intent": "guided",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "guided win lets go" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "41fb0d2e-d9e2-4e6e-a81e-aa31e3c9592e"
+  } ],
+  "eventHandlers": [ {
+    "event": "sys.no-match-default",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "I didn't get that. Can you say it again?", "I missed what you said. What was that?", "Sorry, could you say that again?", "Sorry, can you say that again?", "Can you say that again?", "Sorry, I didn't get that. Can you rephrase?", "Sorry, what was that?", "One more time?", "What was that?", "Say that one more time?", "I didn't get that. Can you repeat?", "I missed that, say that again?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "7cd79d66-8b0e-412d-88af-359e3db7449d"
+  }, {
+    "event": "sys.no-input-default",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "I didn't get that. Can you say it again?", "I missed what you said. What was that?", "Sorry, could you say that again?", "Sorry, can you say that again?", "Can you say that again?", "Sorry, I didn't get that. Can you rephrase?", "Sorry, what was that?", "One more time?", "What was that?", "Say that one more time?", "I didn't get that. Can you repeat?", "I missed that, say that again?" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "name": "26d9ef8c-421b-4163-981c-985787d8fbdb"
+  } ],
+  "nluSettings": {
+    "modelType": "MODEL_TYPE_ADVANCED",
+    "classificationThreshold": 0.30000001
+  },
+  "knowledgeConnectorSettings": {
+    "enabled": true,
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.knowledge.answers[0]" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "dataStoreConnections": [ {
+      "dataStoreType": "PUBLIC_WEB",
+      "dataStore": "projects/604594715070/locations/global/collections/default_collection/dataStores/samssite_1714700896359",
+      "languageCode": "en",
+      "documentProcessingMode": "DOCUMENTS"
+    }, {
+      "dataStoreType": "UNSTRUCTURED",
+      "dataStore": "projects/604594715070/locations/global/collections/default_collection/dataStores/all-computers_1715700430663",
+      "languageCode": "en",
+      "documentProcessingMode": "DOCUMENTS"
+    } ]
+  }
+}

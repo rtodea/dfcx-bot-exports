@@ -1,0 +1,168 @@
+{
+  "name": "6aac0664-59a9-4278-811f-4af97f011455",
+  "displayName": "\u003e collect mode of refund",
+  "form": {
+    "parameters": [ {
+      "displayName": "$flow.order_refund_mode",
+      "required": true,
+      "entityType": "@prebuilt_components_return_refund_mode_of_refund",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+        
+        },
+        "repromptEventHandlers": [ {
+          "event": "sys.no-input-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we are waiting for your input. Please let us know where you would like to receive your refund. You can say something like store credit or source account." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "541f5900-b7c0-44a9-8843-c868cd85ab05"
+        }, {
+          "event": "sys.no-input-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Hmm, we are still waiting for your input. Please let us know where you would like to receive your refund. You can say something like store credit or source account." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "9a05741e-76d6-4d41-bba8-9021cdff8e28"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-input-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_input"
+            } ]
+          },
+          "name": "07eb1ac1-73a7-48aa-807e-85df9a612ad0"
+        }, {
+          "event": "sys.no-match-1",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we didn’t get that. Please let us know where you would like to receive your refund. You can say something like store credit or source account." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "027f2bce-974d-4afb-a079-f64ed59bd68f"
+        }, {
+          "event": "sys.no-match-2",
+          "triggerFulfillment": {
+            "messages": [ {
+              "text": {
+                "text": [ "Sorry, we're still not getting that. Please let us know where you would like to receive your refund. You can say something like store credit or source account." ]
+              },
+              "languageCode": "en"
+            } ]
+          },
+          "name": "95ee532c-63b2-43b7-90ed-b6814411e231"
+        }, {
+          "targetPage": "end failure",
+          "event": "sys.no-match-default",
+          "triggerFulfillment": {
+            "setParameterActions": [ {
+              "parameter": "transfer_reason",
+              "value": "max_no_match"
+            } ]
+          },
+          "name": "738728a7-5045-4eba-a081-e6a7246d4178"
+        } ]
+      }
+    } ]
+  },
+  "entryFulfillment": {
+    "messages": [ {
+      "text": {
+        "text": [ "Please let us know where you would like to receive your refund. You can say something like store credit or source account." ]
+      },
+      "languageCode": "en"
+    } ]
+  },
+  "transitionRoutes": [ {
+    "intent": "prebuilt_components_denial_of_information",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "denial_of_information"
+      } ]
+    },
+    "targetPage": "end failure",
+    "name": "d0425e30-816f-446e-b9b7-13d4bb2f4bd5"
+  }, {
+    "intent": "prebuilt_components_escalate_human_agent",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "transfer_reason",
+        "value": "agent"
+      } ]
+    },
+    "targetPage": "end escalation",
+    "name": "b59e3eac-b9ec-45b2-90d6-51905bbac1ef"
+  }, {
+    "intent": "prebuilt_components_faq",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.faq" ]
+        },
+        "languageCode": "en"
+      } ],
+      "setParameterActions": [ {
+        "parameter": "$flow.last_prompt",
+        "value": "Please let us know where you would like to receive your refund. You can say something like store credit or source account."
+      } ],
+      "generators": [ {
+        "generator": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/generators/70f01675-b4d1-489c-a148-1ac3cdf428a2",
+        "outputParameter": "$request.generative.faq"
+      } ]
+    },
+    "targetPage": "support follow-up faq",
+    "name": "2a183dc9-d808-4a17-a7d9-2f82709f86fe"
+  }, {
+    "condition": "$page.params.status = \"FINAL\" AND $flow.order_refund_mode = $flow.order_refund_mode_source_account AND $flow.order_payment_mode = $flow.order_payment_mode_COD",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.channel",
+        "value": "email"
+      } ]
+    },
+    "targetPage": "\u003e send COD refund details API",
+    "name": "33a96a00-07ca-41c8-93af-309bc91076f2"
+  }, {
+    "condition": "$page.params.status = \"FINAL\"",
+    "triggerFulfillment": {
+      "conditionalCases": [ {
+        "cases": [ {
+          "condition": "$flow.order_refund_mode = \"store_credit\"",
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Thank you for verifying that you would like your refund to be returned to your wallet." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        }, {
+          "caseContent": [ {
+            "message": {
+              "text": {
+                "text": [ "Thank you for verifying that you would like your refund to be returned to the original payment method." ]
+              },
+              "languageCode": "en"
+            }
+          } ]
+        } ]
+      } ]
+    },
+    "targetPage": "\u003e collect return location",
+    "name": "b4c6d039-bfcc-4036-a9c8-7ffce803a8fd"
+  } ]
+}

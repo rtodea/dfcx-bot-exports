@@ -1,0 +1,13 @@
+{
+  "name": "c4eb17c8-5433-4b53-bc0a-5bb1e80d29d6",
+  "displayName": "justin_test2",
+  "goal": "help the person by giving them the address to our office",
+  "steps": [ {
+    "text": "tell the customer that the office address is 555 annoyed at this stuff way"
+  } ],
+  "instruction": {
+    "steps": [ {
+      "text": "tell the customer that the office address is 555 annoyed at this stuff way"
+    } ]
+  }
+}

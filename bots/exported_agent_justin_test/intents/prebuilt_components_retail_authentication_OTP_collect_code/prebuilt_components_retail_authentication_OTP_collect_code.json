@@ -1,0 +1,11 @@
+{
+  "name": "8a403dd2-49ed-482f-901e-f0d238bf0a8a",
+  "displayName": "prebuilt_components_retail_authentication_OTP_collect_code",
+  "parameters": [ {
+    "id": "collect_code",
+    "entityType": "@sys.number-sequence",
+    "isList": true
+  } ],
+  "priority": 500000,
+  "numTrainingPhrases": 34
+}

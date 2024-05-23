@@ -1,0 +1,31 @@
+{
+  "entities": [ {
+    "value": "item_defective_or_doesn’t_work",
+    "synonyms": [ "broken", "damaged", "defective", "Faulty", "flawed", "haywire", "imperfect", "Item defective or doesn’t work", "item doesn't work", "malfunctioning", "not functioning", "not operational", "Not working", "order fulfillment", "screwed up", "substandard", "unsatisfactory" ],
+    "languageCode": "en"
+  }, {
+    "value": "no_longer_needed",
+    "synonyms": [ "already have it", "already have one", "changed my mind", "excess", "extra", "No longer needed", "Not interested", "not needed", "not required", "obsolete", "redundant", "unnecessary", "useless" ],
+    "languageCode": "en"
+  }, {
+    "value": "size_or_fit_issue",
+    "synonyms": [ "Dimensional problem", "fit issue", "improper size", "inappropriate fit", "inappropriate size", "incorrect size", "proportions issue", "scale irregularity", "size discrepancy", "size issue", "size mismatch", "Size or fit issue", "unevenness in size", "unproportionate size", "unsuitable dimensions", "wrong fit", "wrong size" ],
+    "languageCode": "en"
+  }, {
+    "value": "wrong_item_was_sent",
+    "synonyms": [ "erroneous order fulfillment", "inaccurate order processing", "Incorrect item received", "incorrect item sent", "incorrect order processing", "misdirected delivery", "mistaken product dispatch", "mistaken shipment", "order fulfillment error", "order fulfillment mistake", "wrong item" ],
+    "languageCode": "en"
+  }, {
+    "value": "item_arrived_too_late",
+    "synonyms": [ "arrived late", "Belated arrival", "delay in arrival", "delay in delivery", "delayed delivery", "delivered late", "delivery breach", "failure to deliver on time", "item arrived too late", "late delivery", "missed deadline", "order fulfillment delay", "overdue shipment", "tardy arrival", "untimely arrival", "very late received" ],
+    "languageCode": "en"
+  }, {
+    "value": "bought_by_mistake",
+    "synonyms": [ "Accidental purchase", "accidentally bought", "bought by mistake", "erroneous purchase", "impulse purchase", "misguided purchase", "mistaken buy", "regretful purchase", "unintended buy", "unnecessary purchase", "unwanted purchase", "bought unknowingly" ],
+    "languageCode": "en"
+  }, {
+    "value": "others",
+    "synonyms": [ "more options", "more reasons for return", "none of these", "not interested", "Others" ],
+    "languageCode": "en"
+  } ]
+}

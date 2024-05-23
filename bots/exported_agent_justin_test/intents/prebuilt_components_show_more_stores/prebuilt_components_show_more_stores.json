@@ -1,0 +1,10 @@
+{
+  "name": "c4df000c-da93-4bda-a655-bb5c3c1abde4",
+  "displayName": "prebuilt_components_show_more_stores",
+  "parameters": [ {
+    "id": "prebuilt_components_exchange_order_location",
+    "entityType": "@prebuilt_components_exchange_order_location"
+  } ],
+  "priority": 500000,
+  "numTrainingPhrases": 16
+}

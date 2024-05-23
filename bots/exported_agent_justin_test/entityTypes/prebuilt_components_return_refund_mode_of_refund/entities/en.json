@@ -1,0 +1,11 @@
+{
+  "entities": [ {
+    "value": "source_account",
+    "synonyms": [ "bank transfer", "COD", "credit card", "Debit card", "money order", "prepaid card", "source account", "UPI" ],
+    "languageCode": "en"
+  }, {
+    "value": "store_credit",
+    "synonyms": [ "coupon", "gift card", "in-store credit", "merchandise credit", "purchase credit", "store account credit", "store credit", "transfer to wallet", "voucher", "wallet" ],
+    "languageCode": "en"
+  } ]
+}

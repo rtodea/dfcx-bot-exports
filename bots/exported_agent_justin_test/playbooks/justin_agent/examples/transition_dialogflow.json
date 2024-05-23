@@ -1,0 +1,19 @@
+{
+  "name": "f1447743-18bf-47f7-8aff-f70e2da45d63",
+  "actions": [ {
+    "userUtterance": {
+      "text": "guided"
+    }
+  }, {
+    "flowInvocation": {
+      "flow": "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/flows/27a607da-ec85-4840-8d16-67f1f67d1368"
+    }
+  } ],
+  "playbookOutput": {
+    "executionSummary": "you need to take to the guided flow when guided is said \n"
+  },
+  "displayName": "transition_dialogflow",
+  "retrievalStrategy": "STATIC",
+  "conversationState": "OUTPUT_STATE_ESCALATED",
+  "languageCode": "en"
+}

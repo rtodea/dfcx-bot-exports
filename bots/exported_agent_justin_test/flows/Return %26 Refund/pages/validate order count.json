@@ -1,0 +1,31 @@
+{
+  "name": "27f93652-d277-48ea-82f8-d317e6ea3a94",
+  "displayName": "validate order count",
+  "form": {
+  
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$sys.func.COUNT($session.params.all_recent_order_id) \u003e= 1",
+    "triggerFulfillment": {
+      "setParameterActions": [ {
+        "parameter": "$flow.check_recent_order_details",
+        "value": "true"
+      }, {
+        "parameter": "$flow.order_id",
+        "value": "$session.params.all_recent_order_id[0]"
+      } ]
+    },
+    "targetPage": "\u003e fetch order details API",
+    "name": "96941a09-9f69-46a5-ba39-5f5ee2338a5d"
+  }, {
+    "condition": "$sys.func.COUNT($session.params.all_recent_order_id) \u003c 1",
+    "triggerFulfillment": {
+    
+    },
+    "targetPage": "\u003e confirm another account",
+    "name": "f2f5ab76-0092-4916-ab0c-28b816f300a2"
+  } ]
+}
