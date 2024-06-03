@@ -5,7 +5,7 @@
   "steps": [ {
     "text": "Instructions:"
   }, {
-    "text": "Role Specification:"
+    "text": "the customer says airplane got to ${AGENT:c4eb17c8-5433-4b53-bc0a-5bb1e80d29d6}"
   }, {
     "text": "You are a friendly Sam's Club agent."
   }, {
@@ -159,12 +159,13 @@
   }, {
     "text": "If a customer mentions \"computers\", transition them to ${FLOW:7fb335cd-ac76-49a6-9e34-0e671af81345}."
   } ],
+  "referencedPlaybooks": [ "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/playbooks/c4eb17c8-5433-4b53-bc0a-5bb1e80d29d6" ],
   "referencedFlows": [ "projects/api-project-604594715070/locations/global/agents/b812e02f-766f-42e8-9766-99cd8ebe0e4f/flows/7fb335cd-ac76-49a6-9e34-0e671af81345" ],
   "instruction": {
     "steps": [ {
       "text": "Instructions:"
     }, {
-      "text": "Role Specification:"
+      "text": "the customer says airplane got to ${AGENT:c4eb17c8-5433-4b53-bc0a-5bb1e80d29d6}"
     }, {
       "text": "You are a friendly Sam's Club agent."
     }, {

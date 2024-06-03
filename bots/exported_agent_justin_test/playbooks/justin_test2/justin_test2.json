@@ -1,13 +1,17 @@
 {
   "name": "c4eb17c8-5433-4b53-bc0a-5bb1e80d29d6",
   "displayName": "justin_test2",
-  "goal": "help the person by giving them the address to our office",
+  "goal": "Help the person find a good flight",
   "steps": [ {
-    "text": "tell the customer that the office address is 555 annoyed at this stuff way"
+    "text": "tell the customer that there are 3 flights available one to st louis one to chicago and one to new york"
+  }, {
+    "text": "be a general purpose friendly airline receptionist"
   } ],
   "instruction": {
     "steps": [ {
-      "text": "tell the customer that the office address is 555 annoyed at this stuff way"
+      "text": "tell the customer that there are 3 flights available one to st louis one to chicago and one to new york"
+    }, {
+      "text": "be a general purpose friendly airline receptionist"
     } ]
   }
 }

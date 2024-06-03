@@ -3,24 +3,29 @@
   "displayName": "guided",
   "description": "This flow collects the last 5 digit of the order ID.",
   "transitionRoutes": [ {
-    "condition": "true",
+    "intent": "personal",
     "triggerFulfillment": {
-      "setParameterActions": [ {
-        "parameter": "$flow.retry_no_counter",
-        "value": 0
-      }, {
-        "parameter": "$flow.invalid_5digit_code_counter",
-        "value": 0
-      }, {
-        "parameter": "$flow.max_retry_counter",
-        "value": 2
-      }, {
-        "parameter": "$flow.max_order_id_length",
-        "value": 5
+      "messages": [ {
+        "text": {
+          "text": [ "ok personal cool" ]
+        },
+        "languageCode": "en"
       } ]
     },
-    "targetPage": "\u003e collect last 5 digit of order id",
-    "name": "b30cc3e1-d6a7-474d-aa89-29a606455cf2"
+    "targetPage": "page2",
+    "name": "b26d7470-f405-419f-85d3-d566282da106"
+  }, {
+    "intent": "business",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "business" ]
+        },
+        "languageCode": "en"
+      } ]
+    },
+    "targetPage": "page2",
+    "name": "70d40495-6607-4f71-a906-a6fabccda0e9"
   } ],
   "eventHandlers": [ {
     "event": "sys.no-match-default",
